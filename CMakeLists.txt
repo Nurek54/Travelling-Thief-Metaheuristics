@@ -35,8 +35,3 @@ else()
             $<$<CONFIG:Release>:-O3>
     )
 endif()
-
-# MinGW: statyczne linkowanie, zeby exe dzialal poza CLion (np. odpalany ze skryptu Pythona)
-if(MINGW)
-    target_link_options(travelling_thief_metaheuristics PRIVATE -static)
-endif()
