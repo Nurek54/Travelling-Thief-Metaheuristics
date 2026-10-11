@@ -1,0 +1,1 @@
+// Wspolny interfejs solvera.

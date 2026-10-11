@@ -1,0 +1,6 @@
+cmake-build-*/
+.idea/
+results/*
+!results/.gitkeep
+__pycache__/
+.venv/

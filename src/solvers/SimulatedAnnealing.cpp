@@ -1,0 +1,1 @@
+// Implementacja SimulatedAnnealing.h

@@ -1,0 +1,1 @@
+// Krzyzowanie: OX, PMX, CX.

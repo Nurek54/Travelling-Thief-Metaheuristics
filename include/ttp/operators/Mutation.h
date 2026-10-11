@@ -1,0 +1,1 @@
+// Mutacja: Swap, Inversion.
