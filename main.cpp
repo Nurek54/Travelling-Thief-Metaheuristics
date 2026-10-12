@@ -3,6 +3,7 @@
 #include <string>
 
 #include "ttp/Distance.h"
+#include "ttp/Individual.h"
 #include "ttp/Loader.h"
 
 int main() {
@@ -40,6 +41,21 @@ int main() {
                   << "d(0, 0)   = " << distance.get(0, 0) << " (oczekiwane 0)\n"
                   << "d(5, 17)  = " << distance.get(5, 17) << '\n'
                   << "d(17, 5)  = " << distance.get(17, 5) << " (ma byc to samo)\n";
+
+        // TYMCZASOWE: kontrola osobnika
+        Rng rng(42);
+        const Individual individual = makeRandomIndividual(problem, rng);
+        std::cout << "Trasa (pierwsze 10): ";
+        for (int i = 0; i < 10; ++i) {
+            std::cout << individual.route[i] << ' ';
+        }
+        std::cout << "\nDlugosc trasy: " << individual.route.size() << " (oczekiwane " << problem.numCities << ")\n"
+                  << "Plan przedmiotow: " << individual.picked.size() << " (oczekiwane " << problem.numItems << ")\n"
+                  << "Poprawna permutacja: " << (isValidRoute(individual, problem.numCities) ? "tak" : "NIE") << '\n';
+
+        Individual broken = individual;
+        broken.route[1] = broken.route[0]; // celowo psujemy: powtorzone miasto
+        std::cout << "Zepsuta trasa poprawna: " << (isValidRoute(broken, problem.numCities) ? "tak" : "nie") << " (oczekiwane nie)\n";
     } catch (const std::exception& e) {
         std::cerr << "Blad: " << e.what() << '\n';
         return 1;
