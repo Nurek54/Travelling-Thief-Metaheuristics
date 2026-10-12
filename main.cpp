@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+#include "ttp/Distance.h"
 #include "ttp/Loader.h"
 
 int main() {
@@ -32,6 +33,13 @@ int main() {
 
         std::cout << "itemsByCity[0].size() = " << problem.itemsByCity[0].size() << " (oczekiwane 0)\n"
                   << "itemsByCity[1].size() = " << problem.itemsByCity[1].size() << " (oczekiwane 1)\n";
+
+        // TYMCZASOWE: kontrola odleglosci
+        const Distance distance(problem);
+        std::cout << "d(0, 1)   = " << distance.get(0, 1) << " (oczekiwane 20)\n"
+                  << "d(0, 0)   = " << distance.get(0, 0) << " (oczekiwane 0)\n"
+                  << "d(5, 17)  = " << distance.get(5, 17) << '\n'
+                  << "d(17, 5)  = " << distance.get(17, 5) << " (ma byc to samo)\n";
     } catch (const std::exception& e) {
         std::cerr << "Blad: " << e.what() << '\n';
         return 1;
