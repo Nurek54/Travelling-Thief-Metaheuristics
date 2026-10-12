@@ -23,6 +23,7 @@ target_include_directories(travelling_thief_metaheuristics PRIVATE ${CMAKE_SOURC
 target_compile_definitions(travelling_thief_metaheuristics PRIVATE
         TTP_DATA_DIR="${CMAKE_SOURCE_DIR}/data"
         TTP_RESULTS_DIR="${CMAKE_SOURCE_DIR}/results"
+        TTP_TESTS_DIR="${CMAKE_SOURCE_DIR}/tests"
 )
 
 # --- Flagi kompilatora ---

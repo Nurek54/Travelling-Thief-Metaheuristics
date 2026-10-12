@@ -1,3 +1,67 @@
 // Implementacja PackingHeuristic.h
-#include <bits/stdc++.h>
-using namespace std;
+#include "ttp/PackingHeuristic.h"
+
+#include <algorithm>
+#include <utility>
+#include <vector>
+
+void packItems(const Problem& problem, const Distance& distance, Individual& individual) {
+    int n = problem.numCities;
+    int m = problem.numItems;
+
+    // 1. Na ktorej pozycji trasy jest kazde miasto?
+    //    positionInRoute[miasto] = pozycja
+    std::vector<int> positionInRoute(n);
+    for (int pos = 0; pos < n; pos++) {
+        int city = individual.route[pos];
+        positionInRoute[city] = pos;
+    }
+
+    // 2. Ile drogi zostalo od pozycji pos do konca trasy (razem z powrotem do startu)?
+    //    Idziemy od konca trasy do poczatku i dodajemy odleglosci.
+    std::vector<double> remainingDistance(n);
+    int lastCity = individual.route[n - 1];
+    int startCity = individual.route[0];
+    remainingDistance[n - 1] = distance.get(lastCity, startCity);
+    for (int pos = n - 2; pos >= 0; pos--) {
+        int cityHere = individual.route[pos];
+        int cityNext = individual.route[pos + 1];
+        remainingDistance[pos] = remainingDistance[pos + 1] + distance.get(cityHere, cityNext);
+    }
+
+    // 3. Ocena kazdego przedmiotu. Trzymamy pary (ocena, numer przedmiotu).
+    std::vector<std::pair<double, int>> scores;
+    for (int k = 0; k < m; k++) {
+        const Item& item = problem.items[k];
+        int pos = positionInRoute[item.city];
+
+        // W miescie startowym nic nie zbieramy
+        if (pos == 0) {
+            continue;
+        }
+
+        double dist = remainingDistance[pos];
+        if (dist < 1.0) {
+            dist = 1.0; // zabezpieczenie przed dzieleniem przez 0
+        }
+
+        double score = item.profit / (item.weight * dist);
+        scores.push_back(std::make_pair(score, k));
+    }
+
+    // 4. Sortujemy rosnaco po ocenie, wiec najlepsze sa na koncu.
+    std::sort(scores.begin(), scores.end());
+
+    // 5. Bierzemy od najlepszego (od konca), jesli sie miesci.
+    individual.picked.assign(m, 0);
+    int currentWeight = 0;
+    for (int i = static_cast<int>(scores.size()) - 1; i >= 0; i--) {
+        int k = scores[i].second;
+        int weight = problem.items[k].weight;
+
+        if (currentWeight + weight <= problem.capacity) {
+            individual.picked[k] = 1;
+            currentWeight += weight;
+        }
+    }
+}
