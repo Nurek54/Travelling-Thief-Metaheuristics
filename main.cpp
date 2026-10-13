@@ -61,7 +61,6 @@ bool testOperators() {
     std::cout << "                     (oczekiwane |5321764|)\n";
 
     // Krzyzowanie na malym przykladzie, fragment [3, 5]
-    // Miasta musza byc numerowane od 0 do n-1, tak jak w calym programie
     std::vector<int> parent1 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
     std::vector<int> parent2 = {8, 2, 6, 7, 1, 5, 4, 0, 3};
     printRoute("Rodzic 1           ", parent1);
