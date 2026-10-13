@@ -5,14 +5,14 @@ C++ (algorytmy) + Python (wykresy, tabele).
 
 ## Postęp realizacji
 
-### Zajęcia 1
+### Część 1
 - [x] Zapoznanie się z problemem
 - [x] Implementacja loadera
 - [x] Implementacja losowego osobnika TTP
 - [x] Implementacja funkcji f(x)
 - [x] Implementacja algorytmu zachłannego
 
-### Zajęcia 2
+### Część 2
 - [x] Implementacja operatorów mutacji i krzyżowania
 - [ ] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
 - [ ] Implementacja narzędzi logowania → wykresy
