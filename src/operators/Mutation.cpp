@@ -28,7 +28,7 @@ void mutateSwap(Individual& individual, double pm, Rng& rng) {
         }
     }
 
-    // Trasa sie zmienila, wiec stara ocena jest juz nieaktualna
+    // Trasa sie zmienila, wiec stara ocena juz nieaktualna
     if (changed) {
         individual.evaluated = false;
     }

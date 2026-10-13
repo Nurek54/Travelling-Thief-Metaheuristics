@@ -61,14 +61,15 @@ bool testOperators() {
     std::cout << "                     (oczekiwane |5321764|)\n";
 
     // Krzyzowanie na malym przykladzie, fragment [3, 5]
-    std::vector<int> parent1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::vector<int> parent2 = {9, 3, 7, 8, 2, 6, 5, 1, 4};
+    // Miasta musza byc numerowane od 0 do n-1, tak jak w calym programie
+    std::vector<int> parent1 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    std::vector<int> parent2 = {8, 2, 6, 7, 1, 5, 4, 0, 3};
     printRoute("Rodzic 1           ", parent1);
     printRoute("Rodzic 2           ", parent2);
     printRoute("OX  [3,5]          ", orderCrossover(parent1, parent2, 3, 5));
-    std::cout << "                     (oczekiwane |937456821|)\n";
+    std::cout << "                     (oczekiwane |826345710|)\n";
     printRoute("PMX [3,5]          ", pmxCrossover(parent1, parent2, 3, 5));
-    std::cout << "                     (oczekiwane |937456218|)\n";
+    std::cout << "                     (oczekiwane |826345107|)\n";
 
     // 10 000 losowych krzyzowan i mutacji na 280 miastach: dziecko zawsze musi byc permutacja
     const Problem problem = loadProblem(std::string(TTP_DATA_DIR) + "/easy/a280_n279_uncorr_01.ttp");
