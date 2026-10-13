@@ -21,7 +21,7 @@ double Evaluator::evaluate(Individual& individual) {
     long long profit = 0;     // g(y)
     double time = 0.0;        // f(x, y)
 
-    // Jedziemy po kolei: z route[pos - 1] do route[pos]
+    // Po kolei: z route[pos - 1] do route[pos]
     for (int pos = 1; pos < n; pos++) {
         int from = individual.route[pos - 1];
         int to = individual.route[pos];
