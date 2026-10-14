@@ -14,7 +14,7 @@ C++ (algorytmy) + Python (wykresy, tabele).
 
 ### Część 2
 - [x] Implementacja operatorów mutacji i krzyżowania
-- [ ] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
+- [x] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
 - [ ] Implementacja narzędzi logowania → wykresy
 - [ ] Implementacja innej metaheurystyki (SA lub TS)
 - [ ] Wstępne strojenie metaheurystyk

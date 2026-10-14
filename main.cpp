@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "ttp/Config.h"
 #include "ttp/Distance.h"
 #include "ttp/Evaluator.h"
 #include "ttp/Individual.h"
@@ -14,6 +15,7 @@
 #include "ttp/Stats.h"
 #include "ttp/operators/Crossover.h"
 #include "ttp/operators/Mutation.h"
+#include "ttp/solvers/EvolutionaryAlgorithm.h"
 #include "ttp/solvers/Greedy.h"
 #include "ttp/solvers/RandomSearch.h"
 
@@ -140,9 +142,14 @@ int main() {
         int randomCount = 10000; // Alg. losowy [10k]
         unsigned int seed = 42;
 
-        std::ofstream csv(std::string(TTP_RESULTS_DIR) + "/zajecia1.csv");
+        // Algorytm ewolucyjny: parametry startowe z tresci
+        EAConfig eaConfig;
+        int eaRuns = 10; // tresc: min. 10 uruchomien, srednia i odchylenie
+        std::cout << "EA: " << describeConfig(eaConfig) << ", " << eaRuns << " uruchomien\n\n";
+
+        std::ofstream csv(std::string(TTP_RESULTS_DIR) + "/wyniki.csv");
         if (!csv.is_open()) {
-            std::cerr << "Nie mozna utworzyc pliku results/zajecia1.csv\n";
+            std::cerr << "Nie mozna utworzyc pliku results/wyniki.csv\n";
             return 1;
         }
         csv << std::fixed << std::setprecision(2);
@@ -180,10 +187,46 @@ int main() {
                 printResult(csv, instance, "greedy", result, evaluator.getCount(), timeMs);
             }
 
+            // Algorytm ewolucyjny: 10 uruchomien z roznymi seedami
+            {
+                SolverResult result; // values = najlepsze G z kazdego uruchomienia
+                long long totalEvaluations = 0;
+                auto start = std::chrono::steady_clock::now();
+
+                for (int run = 0; run < eaRuns; run++) {
+                    Rng rng(seed + run);
+                    evaluator.resetCount();
+
+                    EAResult ea = runEvolutionaryAlgorithm(problem, evaluator, eaConfig, rng);
+                    totalEvaluations += evaluator.getCount();
+                    result.values.push_back(ea.best.fitness);
+
+                    if (run == 0 || ea.best.fitness > result.best.fitness) {
+                        result.best = ea.best;
+                    }
+
+                    // Dla pierwszego uruchomienia pokazujemy, jak rosnie najlepszy wynik
+                    if (run == 0) {
+                        std::cout << "  ea (run 1) best w pokoleniach:";
+                        for (const GenerationStats& stats : ea.history) {
+                            if (stats.generation % 25 == 0) {
+                                std::cout << "  [" << stats.generation << "] " << stats.best;
+                            }
+                        }
+                        std::cout << '\n';
+                    }
+                }
+
+                auto end = std::chrono::steady_clock::now();
+                double timeMs = std::chrono::duration<double, std::milli>(end - start).count();
+                // srednia liczba ocen i sredni czas na jedno uruchomienie
+                printResult(csv, instance, "ea", result, totalEvaluations / eaRuns, timeMs / eaRuns);
+            }
+
             std::cout << '\n';
         }
 
-        std::cout << "Wyniki zapisane w results/zajecia1.csv\n";
+        std::cout << "Wyniki zapisane w results/wyniki.csv\n";
     } catch (const std::exception& e) {
         std::cerr << "Blad: " << e.what() << '\n';
         return 1;
