@@ -15,11 +15,22 @@ C++ (algorytmy) + Python (wykresy, tabele).
 ### Część 2
 - [x] Implementacja operatorów mutacji i krzyżowania
 - [x] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
-- [ ] Implementacja narzędzi logowania → wykresy
+- [x] Implementacja narzędzi logowania → wykresy
 - [ ] Implementacja innej metaheurystyki (SA lub TS)
 - [ ] Wstępne strojenie metaheurystyk
 - [ ] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego
 - [ ] Przygotowanie sprawozdania: tabelki, wykresy, wnioski
+
+## Uruchomienie
+1. Zbuduj i uruchom program C++ (najlepiej w profilu **Release**). Zapisuje:
+   - `results/wyniki.csv`: best/worst/avg/std dla każdej metody i instancji,
+   - `results/history/<instancja>_runXX.csv`: przebieg EA (`generation;best;avg;worst`).
+2. Wykresy i tabela:
+   ```
+   pip install -r scripts/requirements.txt
+   python scripts/plot_generations.py   # -> results/plots/*.png
+   python scripts/make_table.py         # -> results/tabela.md, results/tabela.csv
+   ```
 
 ## Założenia
 - W mieście startowym złodziej nie zbiera przedmiotów (tylko z niego wyrusza).

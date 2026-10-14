@@ -1,5 +1,6 @@
 #include <chrono>
 #include <exception>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -11,6 +12,7 @@
 #include "ttp/Evaluator.h"
 #include "ttp/Individual.h"
 #include "ttp/Loader.h"
+#include "ttp/Logger.h"
 #include "ttp/Rng.h"
 #include "ttp/Stats.h"
 #include "ttp/operators/Crossover.h"
@@ -199,6 +201,14 @@ int main() {
 
                     EAResult ea = runEvolutionaryAlgorithm(problem, evaluator, eaConfig, rng);
                     totalEvaluations += evaluator.getCount();
+
+                    // Historia pokolen do CSV, np. results/history/a280_n279_uncorr_01_run01.csv
+                    std::string name = std::filesystem::path(instance).stem().string();
+                    std::string runNumber = std::to_string(run + 1);
+                    if (run + 1 < 10) {
+                        runNumber = "0" + runNumber;
+                    }
+                    saveHistoryCsv(std::string(TTP_RESULTS_DIR) + "/history/" + name + "_run" + runNumber + ".csv", ea.history);
                     result.values.push_back(ea.best.fitness);
 
                     if (run == 0 || ea.best.fitness > result.best.fitness) {
@@ -226,7 +236,10 @@ int main() {
             std::cout << '\n';
         }
 
-        std::cout << "Wyniki zapisane w results/wyniki.csv\n";
+        std::cout << "Wyniki zapisane w results/wyniki.csv\n"
+                  << "Historia pokolen EA zapisana w results/history/\n"
+                  << "Wykresy: python scripts/plot_generations.py\n"
+                  << "Tabela:  python scripts/make_table.py\n";
     } catch (const std::exception& e) {
         std::cerr << "Blad: " << e.what() << '\n';
         return 1;
