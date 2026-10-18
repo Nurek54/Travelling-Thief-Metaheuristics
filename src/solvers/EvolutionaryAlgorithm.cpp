@@ -6,6 +6,7 @@
 #include "ttp/operators/Crossover.h"
 #include "ttp/operators/Mutation.h"
 #include "ttp/operators/Selection.h"
+#include "ttp/solvers/Greedy.h"
 
 // Wybiera rodzica wedlug ustawionej metody selekcji
 static int selectParent(const std::vector<Individual>& population, const EAConfig& config, Rng& rng) {
@@ -59,13 +60,23 @@ static bool isBetter(const Individual& a, const Individual& b) {
     return a.fitness > b.fitness;
 }
 
-EAResult runEvolutionaryAlgorithm(const Problem& problem, Evaluator& evaluator, const EAConfig& config, Rng& rng) {
+EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distance, Evaluator& evaluator,
+                                  const EAConfig& config, Rng& rng) {
     EAResult result;
 
-    // 1. Inicjalizacja: losowa populacja i jej ocena
+    // 1. Inicjalizacja: czesc populacji zachlanna (greedyInit), reszta losowa
+    int greedyCount = static_cast<int>(config.greedyInit * config.popSize);
+
     std::vector<Individual> population;
     for (int i = 0; i < config.popSize; i++) {
-        Individual individual = makeRandomIndividual(problem, rng);
+        Individual individual;
+        if (i < greedyCount) {
+            // najblizszy sasiad z losowego miasta startowego
+            int startCity = rng.uniformInt(0, problem.numCities - 1);
+            individual = makeNearestNeighbourIndividual(problem, distance, startCity);
+        } else {
+            individual = makeRandomIndividual(problem, rng);
+        }
         evaluator.evaluate(individual);
         population.push_back(individual);
 

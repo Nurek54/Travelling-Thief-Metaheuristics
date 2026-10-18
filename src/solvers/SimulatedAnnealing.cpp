@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "ttp/operators/Mutation.h"
+#include "ttp/solvers/Greedy.h"
 
 // Robi z osobnika jego sasiada: jedna zamiana dwoch miast albo jedno odwrocenie fragmentu
 static void makeNeighbour(Individual& individual, MutationType move, Rng& rng) {
@@ -54,7 +55,8 @@ static double estimateStartTemperature(const Problem& problem, Evaluator& evalua
     return averageWorse / std::log(2.0);
 }
 
-SAResult runSimulatedAnnealing(const Problem& problem, Evaluator& evaluator, const SAConfig& config, Rng& rng) {
+SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance, Evaluator& evaluator,
+                               const SAConfig& config, Rng& rng) {
     SAResult result;
 
     // 1. Temperatura poczatkowa: podana albo dobrana automatycznie
@@ -64,8 +66,14 @@ SAResult runSimulatedAnnealing(const Problem& problem, Evaluator& evaluator, con
     }
     result.startTemperature = temperature;
 
-    // 2. Rozwiazanie startowe: losowe (tak jak w EA)
-    Individual current = makeRandomIndividual(problem, rng);
+    // 2. Rozwiazanie startowe: losowe albo zachlanne (najblizszy sasiad z losowego miasta)
+    Individual current;
+    if (config.greedyStart) {
+        int startCity = rng.uniformInt(0, problem.numCities - 1);
+        current = makeNearestNeighbourIndividual(problem, distance, startCity);
+    } else {
+        current = makeRandomIndividual(problem, rng);
+    }
     evaluator.evaluate(current);
     result.best = current;
     result.history.push_back({0, result.best.fitness, current.fitness, temperature});

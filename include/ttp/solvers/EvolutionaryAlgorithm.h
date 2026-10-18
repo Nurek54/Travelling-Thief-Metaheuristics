@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "ttp/Config.h"
+#include "ttp/Distance.h"
 #include "ttp/Evaluator.h"
 #include "ttp/Individual.h"
 #include "ttp/Problem.h"
@@ -22,4 +23,6 @@ struct EAResult {
     std::vector<GenerationStats> history;  // statystyki kazdego pokolenia (0 = populacja startowa)
 };
 
-EAResult runEvolutionaryAlgorithm(const Problem& problem, Evaluator& evaluator, const EAConfig& config, Rng& rng);
+// distance jest potrzebny tylko do inicjalizacji zachlannej (greedyInit > 0)
+EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distance, Evaluator& evaluator,
+                                  const EAConfig& config, Rng& rng);

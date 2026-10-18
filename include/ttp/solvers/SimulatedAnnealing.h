@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "ttp/Config.h"
+#include "ttp/Distance.h"
 #include "ttp/Evaluator.h"
 #include "ttp/Individual.h"
 #include "ttp/Problem.h"
@@ -23,4 +24,6 @@ struct SAResult {
     double startTemperature = 0.0;  // uzyta temperatura poczatkowa (przydatne, gdy byla dobrana automatycznie)
 };
 
-SAResult runSimulatedAnnealing(const Problem& problem, Evaluator& evaluator, const SAConfig& config, Rng& rng);
+// distance jest potrzebny tylko do startu zachlannego (greedyStart = true)
+SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance, Evaluator& evaluator,
+                               const SAConfig& config, Rng& rng);

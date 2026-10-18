@@ -30,7 +30,8 @@ std::string describeConfig(const EAConfig& config) {
     }
     text << " elite=" << config.elitism
          << " cross=" << crossover
-         << " mut=" << mutation;
+         << " mut=" << mutation
+         << " greedyInit=" << config.greedyInit;
     return text.str();
 }
 
@@ -49,5 +50,10 @@ std::string describeConfig(const SAConfig& config) {
     }
     text << " cooling=" << config.coolingRate
          << " move=" << move;
+    if (config.greedyStart) {
+        text << " start=greedy";
+    } else {
+        text << " start=random";
+    }
     return text.str();
 }

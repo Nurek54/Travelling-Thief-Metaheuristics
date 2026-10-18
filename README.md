@@ -17,7 +17,7 @@ C++ (algorytmy) + Python (wykresy, tabele).
 - [x] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
 - [x] Implementacja narzędzi logowania → wykresy
 - [x] Implementacja innej metaheurystyki (SA lub TS)
-- [ ] Wstępne strojenie metaheurystyk
+- [x] Wstępne strojenie metaheurystyk (wyniki: `docs/STROJENIE.md`)
 - [ ] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego
 - [ ] Przygotowanie sprawozdania: tabelki, wykresy, wnioski
 
@@ -32,6 +32,19 @@ C++ (algorytmy) + Python (wykresy, tabele).
    python scripts/plot_generations.py   # -> results/plots/ea_*.png, results/plots/sa_*.png
    python scripts/make_table.py         # -> results/tabela.md, results/tabela.csv
    ```
+
+### Pojedynczy eksperyment i strojenie
+Program uruchomiony z argumentami liczy jedną metodę na jednej instancji i **dopisuje** wynik do CSV w `results/`:
+```
+travelling_thief_metaheuristics.exe --method ea --instance extra/a280_n837_uncorr-similar-weights_05.ttp --gen 500 --mut swap --pm 0.005 --greedy-init 0.5 --runs 10 --out tuning/moje.csv
+travelling_thief_metaheuristics.exe --help
+```
+Seria eksperymentów (jeden parametr naraz, 10 uruchomień na wartość, CSV + wykres w `results/tuning/`):
+```
+python scripts/run_experiments.py            # lista eksperymentów
+python scripts/run_experiments.py ea_pm_swap # jeden
+python scripts/run_experiments.py all        # wszystkie (ok. 7 min w Release)
+```
 
 ## Założenia
 - W mieście startowym złodziej nie zbiera przedmiotów (tylko z niego wyrusza).
