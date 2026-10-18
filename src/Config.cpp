@@ -33,3 +33,21 @@ std::string describeConfig(const EAConfig& config) {
          << " mut=" << mutation;
     return text.str();
 }
+
+std::string describeConfig(const SAConfig& config) {
+    std::string move = "inversion";
+    if (config.move == MutationType::Swap) {
+        move = "swap";
+    }
+
+    std::ostringstream text;
+    text << "iter=" << config.iterations;
+    if (config.startTemperature > 0.0) {
+        text << " T0=" << config.startTemperature;
+    } else {
+        text << " T0=auto";
+    }
+    text << " cooling=" << config.coolingRate
+         << " move=" << move;
+    return text.str();
+}

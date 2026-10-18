@@ -27,3 +27,24 @@ void saveHistoryCsv(const std::string& path, const std::vector<GenerationStats>&
              << stats.worst << '\n';
     }
 }
+
+void saveSAHistoryCsv(const std::string& path, const std::vector<SAStats>& history) {
+    std::filesystem::path folder = std::filesystem::path(path).parent_path();
+    if (!folder.empty()) {
+        std::filesystem::create_directories(folder);
+    }
+
+    std::ofstream file(path);
+    if (!file.is_open()) {
+        throw std::runtime_error("Nie mozna utworzyc pliku: " + path);
+    }
+
+    file << std::fixed << std::setprecision(4);
+    file << "iteration;best;current;temperature\n";
+    for (const SAStats& stats : history) {
+        file << stats.iteration << ';'
+             << stats.best << ';'
+             << stats.current << ';'
+             << stats.temperature << '\n';
+    }
+}

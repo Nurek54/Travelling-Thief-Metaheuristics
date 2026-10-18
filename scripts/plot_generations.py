@@ -1,7 +1,11 @@
-"""Wykresy przebiegu EA: najlepszy, sredni i najgorszy osobnik w kolejnych pokoleniach.
+"""Wykresy przebiegu algorytmow.
 
-Czyta pliki results/history/<instancja>_runXX.csv (zapisuje je program C++),
-usrednia je po wszystkich uruchomieniach i zapisuje wykresy do results/plots/<instancja>.png.
+EA: najlepszy, sredni i najgorszy osobnik w kolejnych pokoleniach.
+    Czyta results/history/<instancja>_runXX.csv -> results/plots/ea_<instancja>.png
+SA: najlepsze i biezace rozwiazanie w kolejnych iteracjach.
+    Czyta results/history_sa/<instancja>_runXX.csv -> results/plots/sa_<instancja>.png
+
+Pliki CSV zapisuje program C++. Wykres to srednia ze wszystkich uruchomien.
 
 Uruchomienie (z glownego folderu projektu):
     python scripts/plot_generations.py
@@ -17,6 +21,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 HISTORY_DIR = ROOT / "results" / "history"
+HISTORY_SA_DIR = ROOT / "results" / "history_sa"
 PLOTS_DIR = ROOT / "results" / "plots"
 RESULTS_FILE = ROOT / "results" / "wyniki.csv"
 
@@ -30,10 +35,10 @@ COLOR_MUTED = "#52514e"
 COLOR_GRID = "#e4e3df"
 
 
-def find_instances():
+def find_instances(folder):
     """Zwraca slownik: nazwa instancji -> lista plikow CSV z jej uruchomieniami."""
     instances = {}
-    for path in sorted(HISTORY_DIR.glob("*_run*.csv")):
+    for path in sorted(folder.glob("*_run*.csv")):
         name = path.stem.rsplit("_run", 1)[0]
         instances.setdefault(name, []).append(path)
     return instances
@@ -52,6 +57,34 @@ def load_greedy_best():
     return best
 
 
+def style_axes(ax, title, xlabel):
+    """Wspolny wyglad wykresow: siatka i osie w tle, pelne liczby na osi Y."""
+    ax.set_title(title, color=COLOR_TEXT, fontsize=11, loc="left")
+    ax.set_xlabel(xlabel, color=COLOR_MUTED)
+    ax.set_ylabel("G = zysk - czas", color=COLOR_MUTED)
+
+    ax.grid(True, color=COLOR_GRID, linewidth=0.8)
+    ax.set_axisbelow(True)
+    for side in ["top", "right"]:
+        ax.spines[side].set_visible(False)
+    for side in ["left", "bottom"]:
+        ax.spines[side].set_color(COLOR_GRID)
+    ax.tick_params(colors=COLOR_MUTED)
+
+    # Pelne liczby z odstepem co 3 cyfry (1 320 000 zamiast 1.32 i "1e6" nad osia)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:,.0f}".replace(",", " ")))
+    ax.legend(frameon=False, labelcolor=COLOR_TEXT)
+
+
+def save_figure(fig, filename):
+    fig.tight_layout()
+    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
+    out = PLOTS_DIR / filename
+    fig.savefig(out)
+    plt.close(fig)
+    print(f"Zapisano {out.relative_to(ROOT)}")
+
+
 def plot_instance(name, files, greedy_best):
     # Wczytujemy wszystkie uruchomienia i liczymy srednia dla kazdego pokolenia
     runs = [pd.read_csv(path, sep=";") for path in files]
@@ -68,41 +101,41 @@ def plot_instance(name, files, greedy_best):
         ax.axhline(greedy_best[name], color=COLOR_GREEDY, linewidth=1.5, linestyle="--",
                    label="zachłanny (best)")
 
-    ax.set_title(f"{name}  (średnia z {len(files)} uruchomień)", color=COLOR_TEXT, fontsize=11, loc="left")
-    ax.set_xlabel("pokolenie", color=COLOR_MUTED)
-    ax.set_ylabel("G = zysk - czas", color=COLOR_MUTED)
+    style_axes(ax, f"EA: {name}  (średnia z {len(files)} uruchomień)", "pokolenie")
+    save_figure(fig, f"ea_{name}.png")
 
-    # Siatka i osie w tle, zeby nie przykrywaly danych
-    ax.grid(True, color=COLOR_GRID, linewidth=0.8)
-    ax.set_axisbelow(True)
-    for side in ["top", "right"]:
-        ax.spines[side].set_visible(False)
-    for side in ["left", "bottom"]:
-        ax.spines[side].set_color(COLOR_GRID)
-    ax.tick_params(colors=COLOR_MUTED)
 
-    # Pelne liczby z odstepem co 3 cyfry (1 320 000 zamiast 1.32 i "1e6" nad osia)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:,.0f}".replace(",", " ")))
+def plot_sa_instance(name, files, greedy_best):
+    runs = [pd.read_csv(path, sep=";") for path in files]
+    all_runs = pd.concat(runs)
+    mean = all_runs.groupby("iteration").mean()
 
-    ax.legend(frameon=False, labelcolor=COLOR_TEXT)
-    fig.tight_layout()
+    fig, ax = plt.subplots(figsize=(8, 4.5), dpi=150)
 
-    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
-    out = PLOTS_DIR / f"{name}.png"
-    fig.savefig(out)
-    plt.close(fig)
-    print(f"Zapisano {out.relative_to(ROOT)}")
+    ax.plot(mean.index, mean["best"], color=COLOR_BEST, linewidth=2, label="najlepszy")
+    ax.plot(mean.index, mean["current"], color=COLOR_AVG, linewidth=2, label="bieżący")
+
+    if name in greedy_best:
+        ax.axhline(greedy_best[name], color=COLOR_GREEDY, linewidth=1.5, linestyle="--",
+                   label="zachłanny (best)")
+
+    style_axes(ax, f"SA: {name}  (średnia z {len(files)} uruchomień)", "iteracja")
+    save_figure(fig, f"sa_{name}.png")
 
 
 def main():
-    instances = find_instances()
-    if not instances:
-        print(f"Brak plikow w {HISTORY_DIR}. Najpierw uruchom program C++.")
+    greedy_best = load_greedy_best()
+
+    ea_instances = find_instances(HISTORY_DIR)
+    sa_instances = find_instances(HISTORY_SA_DIR)
+    if not ea_instances and not sa_instances:
+        print("Brak plikow z historia. Najpierw uruchom program C++.")
         return
 
-    greedy_best = load_greedy_best()
-    for name, files in instances.items():
+    for name, files in ea_instances.items():
         plot_instance(name, files, greedy_best)
+    for name, files in sa_instances.items():
+        plot_sa_instance(name, files, greedy_best)
 
 
 if __name__ == "__main__":

@@ -20,6 +20,7 @@
 #include "ttp/solvers/EvolutionaryAlgorithm.h"
 #include "ttp/solvers/Greedy.h"
 #include "ttp/solvers/RandomSearch.h"
+#include "ttp/solvers/SimulatedAnnealing.h"
 
 // Test funkcji oceny na malym przykladzie policzonym recznie (tests/tiny_expected.md)
 bool testTinyInstance() {
@@ -147,7 +148,12 @@ int main() {
         // Algorytm ewolucyjny: parametry startowe z tresci
         EAConfig eaConfig;
         int eaRuns = 10; // tresc: min. 10 uruchomien, srednia i odchylenie
-        std::cout << "EA: " << describeConfig(eaConfig) << ", " << eaRuns << " uruchomien\n\n";
+        std::cout << "EA: " << describeConfig(eaConfig) << ", " << eaRuns << " uruchomien\n";
+
+        // Symulowane wyzarzanie: tyle samo uruchomien
+        SAConfig saConfig;
+        int saRuns = 10;
+        std::cout << "SA: " << describeConfig(saConfig) << ", " << saRuns << " uruchomien\n\n";
 
         std::ofstream csv(std::string(TTP_RESULTS_DIR) + "/wyniki.csv");
         if (!csv.is_open()) {
@@ -233,11 +239,54 @@ int main() {
                 printResult(csv, instance, "ea", result, totalEvaluations / eaRuns, timeMs / eaRuns);
             }
 
+            // Symulowane wyzarzanie: 10 uruchomien z roznymi seedami
+            {
+                SolverResult result; // values = najlepsze G z kazdego uruchomienia
+                long long totalEvaluations = 0;
+                auto start = std::chrono::steady_clock::now();
+
+                for (int run = 0; run < saRuns; run++) {
+                    Rng rng(seed + run);
+                    evaluator.resetCount();
+
+                    SAResult sa = runSimulatedAnnealing(problem, evaluator, saConfig, rng);
+                    totalEvaluations += evaluator.getCount();
+                    result.values.push_back(sa.best.fitness);
+
+                    if (run == 0 || sa.best.fitness > result.best.fitness) {
+                        result.best = sa.best;
+                    }
+
+                    // Historia do CSV, np. results/history_sa/a280_n279_uncorr_01_run01.csv
+                    std::string name = std::filesystem::path(instance).stem().string();
+                    std::string runNumber = std::to_string(run + 1);
+                    if (run + 1 < 10) {
+                        runNumber = "0" + runNumber;
+                    }
+                    saveSAHistoryCsv(std::string(TTP_RESULTS_DIR) + "/history_sa/" + name + "_run" + runNumber + ".csv", sa.history);
+
+                    if (run == 0) {
+                        std::cout << "  sa (run 1) T0 = " << sa.startTemperature << ", best w iteracjach:";
+                        for (const SAStats& stats : sa.history) {
+                            if (stats.iteration % 2500 == 0) {
+                                std::cout << "  [" << stats.iteration << "] " << stats.best;
+                            }
+                        }
+                        std::cout << '\n';
+                    }
+                }
+
+                auto end = std::chrono::steady_clock::now();
+                double timeMs = std::chrono::duration<double, std::milli>(end - start).count();
+                printResult(csv, instance, "sa", result, totalEvaluations / saRuns, timeMs / saRuns);
+            }
+
             std::cout << '\n';
         }
 
         std::cout << "Wyniki zapisane w results/wyniki.csv\n"
                   << "Historia pokolen EA zapisana w results/history/\n"
+                  << "Historia SA zapisana w results/history_sa/\n"
                   << "Wykresy: python scripts/plot_generations.py\n"
                   << "Tabela:  python scripts/make_table.py\n";
     } catch (const std::exception& e) {

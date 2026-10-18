@@ -16,7 +16,7 @@ C++ (algorytmy) + Python (wykresy, tabele).
 - [x] Implementacja operatorów mutacji i krzyżowania
 - [x] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
 - [x] Implementacja narzędzi logowania → wykresy
-- [ ] Implementacja innej metaheurystyki (SA lub TS)
+- [x] Implementacja innej metaheurystyki (SA lub TS)
 - [ ] Wstępne strojenie metaheurystyk
 - [ ] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego
 - [ ] Przygotowanie sprawozdania: tabelki, wykresy, wnioski
@@ -24,11 +24,12 @@ C++ (algorytmy) + Python (wykresy, tabele).
 ## Uruchomienie
 1. Zbuduj i uruchom program C++ (najlepiej w profilu **Release**). Zapisuje:
    - `results/wyniki.csv`: best/worst/avg/std dla każdej metody i instancji,
-   - `results/history/<instancja>_runXX.csv`: przebieg EA (`generation;best;avg;worst`).
+   - `results/history/<instancja>_runXX.csv`: przebieg EA (`generation;best;avg;worst`),
+   - `results/history_sa/<instancja>_runXX.csv`: przebieg SA (`iteration;best;current;temperature`).
 2. Wykresy i tabela:
    ```
    pip install -r scripts/requirements.txt
-   python scripts/plot_generations.py   # -> results/plots/*.png
+   python scripts/plot_generations.py   # -> results/plots/ea_*.png, results/plots/sa_*.png
    python scripts/make_table.py         # -> results/tabela.md, results/tabela.csv
    ```
 
