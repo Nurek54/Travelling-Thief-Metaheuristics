@@ -7,7 +7,8 @@
 
 class Evaluator {
 public:
-    Evaluator(const Problem& problem, const Distance& distance);
+    // smartPacking = true: pakowanie z kontrola oplacalnosci (patrz PackingHeuristic.h)
+    Evaluator(const Problem& problem, const Distance& distance, bool smartPacking = false);
 
     // Dobiera przedmioty (packItems), liczy G i zapisuje wynik w osobniku.
     // Zwraca G.
@@ -20,5 +21,6 @@ public:
 private:
     const Problem& problem_;
     const Distance& distance_;
+    bool smartPacking_ = false;
     long long count_ = 0;
 };

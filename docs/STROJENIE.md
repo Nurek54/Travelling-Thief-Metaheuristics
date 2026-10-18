@@ -11,6 +11,8 @@ Odniesienie: algorytm zachłanny, best = **267 553**, avg = 260 597.
 
 Wykresy: `docs/strojenie/<eksperyment>.png`. Powtórzenie: `python scripts/run_experiments.py all`.
 
+Uwaga: później automatyczne T0 w SA zaczęło być liczone wokół rozwiązania startowego (a nie losowego), więc powtórzone wyniki SA mogą się minimalnie różnić od tabel poniżej. Dalsze badania i finalne porównanie: `docs/BADANIA.md`.
+
 ## Algorytm ewolucyjny
 
 | Eksperyment | Wartości → avg G | Wniosek |

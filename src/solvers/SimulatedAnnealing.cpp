@@ -27,13 +27,12 @@ static void makeNeighbour(Individual& individual, MutationType move, Rng& rng) {
 }
 
 // Automatyczna temperatura poczatkowa.
-// Sprawdzamy 100 losowych ruchow i liczymy, o ile srednio pogarszaja wynik.
-// Temperature dobieramy tak, zeby na starcie taki typowy gorszy ruch byl akceptowany w ok. 50% przypadkow:
-// exp(-srednie_pogorszenie / T) = 0.5  ->  T = srednie_pogorszenie / ln(2)
-static double estimateStartTemperature(const Problem& problem, Evaluator& evaluator, MutationType move, Rng& rng) {
-    Individual start = makeRandomIndividual(problem, rng);
-    evaluator.evaluate(start);
-
+// Sprawdzamy 100 losowych ruchow od rozwiazania startowego i liczymy, o ile srednio pogarszaja wynik.
+// Temperature dobieramy tak, zeby na starcie taki typowy gorszy ruch byl akceptowany
+// z prawdopodobienstwem acceptance (np. 0.5 = w polowie przypadkow):
+// exp(-srednie_pogorszenie / T) = acceptance  ->  T = srednie_pogorszenie / (-ln(acceptance))
+static double estimateStartTemperature(const Individual& start, Evaluator& evaluator, MutationType move,
+                                       double acceptance, Rng& rng) {
     double sumWorse = 0.0;
     int countWorse = 0;
     for (int k = 0; k < 100; k++) {
@@ -52,21 +51,14 @@ static double estimateStartTemperature(const Problem& problem, Evaluator& evalua
         return 1.0;
     }
     double averageWorse = sumWorse / countWorse;
-    return averageWorse / std::log(2.0);
+    return averageWorse / -std::log(acceptance);
 }
 
 SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance, Evaluator& evaluator,
                                const SAConfig& config, Rng& rng) {
     SAResult result;
 
-    // 1. Temperatura poczatkowa: podana albo dobrana automatycznie
-    double temperature = config.startTemperature;
-    if (temperature <= 0.0) {
-        temperature = estimateStartTemperature(problem, evaluator, config.move, rng);
-    }
-    result.startTemperature = temperature;
-
-    // 2. Rozwiazanie startowe: losowe albo zachlanne (najblizszy sasiad z losowego miasta)
+    // 1. Rozwiazanie startowe: losowe albo zachlanne (najblizszy sasiad z losowego miasta)
     Individual current;
     if (config.greedyStart) {
         int startCity = rng.uniformInt(0, problem.numCities - 1);
@@ -75,6 +67,13 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
         current = makeRandomIndividual(problem, rng);
     }
     evaluator.evaluate(current);
+
+    // 2. Temperatura poczatkowa: podana albo dobrana automatycznie (wokol rozwiazania startowego)
+    double temperature = config.startTemperature;
+    if (temperature <= 0.0) {
+        temperature = estimateStartTemperature(current, evaluator, config.move, config.startAcceptance, rng);
+    }
+    result.startTemperature = temperature;
     result.best = current;
     result.history.push_back({0, result.best.fitness, current.fitness, temperature});
 

@@ -20,8 +20,10 @@ TABLE_CSV = ROOT / "results" / "tabela.csv"
 METHOD_NAMES = {
     "random": "Losowy [10k]",
     "greedy": "Zachłanny [n]",
-    "ea": "EA [10x]",
-    "sa": "SA [10x]",
+    "ea_start": "EA start [10x]",
+    "sa_start": "SA start [10x]",
+    "ea": "EA dostrojony [10x]",
+    "sa": "SA dostrojony [10x]",
 }
 STATS = ["best", "worst", "avg", "std"]
 

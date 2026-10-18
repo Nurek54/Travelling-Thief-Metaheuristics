@@ -18,11 +18,11 @@ C++ (algorytmy) + Python (wykresy, tabele).
 - [x] Implementacja narzędzi logowania → wykresy
 - [x] Implementacja innej metaheurystyki (SA lub TS)
 - [x] Wstępne strojenie metaheurystyk (wyniki: `docs/STROJENIE.md`)
-- [ ] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego
-- [ ] Przygotowanie sprawozdania: tabelki, wykresy, wnioski
+- [x] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego (wyniki: `docs/BADANIA.md`)
+- [ ] Przygotowanie sprawozdania: tabelki, wykresy, wnioski (dane gotowe: `docs/wyniki/`, `docs/BADANIA.md`; zostaje tekst)
 
 ## Uruchomienie
-1. Zbuduj i uruchom program C++ (najlepiej w profilu **Release**). Zapisuje:
+1. Zbuduj i uruchom program C++ (najlepiej w profilu **Release**, ok. 4 min). Porównuje losowy, zachłanny, EA i SA (parametry z treści i dostrojone, budżet 10 000 ocen) na 7 instancjach. Zapisuje:
    - `results/wyniki.csv`: best/worst/avg/std dla każdej metody i instancji,
    - `results/history/<instancja>_runXX.csv`: przebieg EA (`generation;best;avg;worst`),
    - `results/history_sa/<instancja>_runXX.csv`: przebieg SA (`iteration;best;current;temperature`).
@@ -44,6 +44,7 @@ Seria eksperymentów (jeden parametr naraz, 10 uruchomień na wartość, CSV + w
 python scripts/run_experiments.py            # lista eksperymentów
 python scripts/run_experiments.py ea_pm_swap # jeden
 python scripts/run_experiments.py all        # wszystkie (ok. 7 min w Release)
+python scripts/run_experiments.py ea_tour --on easy1 medium1 hard1   # na wybranych instancjach
 ```
 
 ## Założenia

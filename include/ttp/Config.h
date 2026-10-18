@@ -26,6 +26,7 @@ struct EAConfig {
     double pm = 0.1;   // prawdopodobienstwo mutacji
     int tourSize = 5;  // rozmiar turnieju
     int elitism = 1;   // ilu najlepszych przechodzi bez zmian do nastepnego pokolenia
+    int maxEvaluations = 0;   // limit ocen funkcji celu (0 = bez limitu, wtedy liczy sie tylko generations)
     double greedyInit = 0.0;  // jaka czesc populacji startowej to trasy zachlanne (0.0 = wszystkie losowe, 1.0 = wszystkie zachlanne)
 
     SelectionType selection = SelectionType::Tournament;
@@ -37,6 +38,7 @@ struct EAConfig {
 struct SAConfig {
     int iterations = 10000;          // ile sasiadow sprawdzamy (tyle ocen co EA/losowy, uczciwe porownanie)
     double startTemperature = 0.0;   // 0 = dobierz automatycznie na podstawie instancji
+    double startAcceptance = 0.5;    // przy automatycznym T0: z jakim prawdopodobienstwem na starcie bierzemy typowy gorszy ruch
     double coolingRate = 0.999;      // po kazdej iteracji: T = T * coolingRate
     MutationType move = MutationType::Inversion;  // ruch do sasiada: inwersja albo swap
     bool greedyStart = false;        // start z trasy zachlannej zamiast losowej

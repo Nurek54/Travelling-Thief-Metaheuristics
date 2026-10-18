@@ -3,14 +3,14 @@
 
 #include "ttp/PackingHeuristic.h"
 
-Evaluator::Evaluator(const Problem& problem, const Distance& distance)
-    : problem_(problem), distance_(distance) {}
+Evaluator::Evaluator(const Problem& problem, const Distance& distance, bool smartPacking)
+    : problem_(problem), distance_(distance), smartPacking_(smartPacking) {}
 
 double Evaluator::evaluate(Individual& individual) {
     count_++;
 
     // Najpierw wybieramy przedmioty dla tej trasy
-    packItems(problem_, distance_, individual);
+    packItems(problem_, distance_, individual, smartPacking_);
 
     int n = problem_.numCities;
     double vmax = problem_.maxSpeed;

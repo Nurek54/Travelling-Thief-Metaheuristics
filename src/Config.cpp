@@ -21,7 +21,11 @@ std::string describeConfig(const EAConfig& config) {
 
     std::ostringstream text;
     text << "pop=" << config.popSize
-         << " gen=" << config.generations
+         << " gen=" << config.generations;
+    if (config.maxEvaluations > 0) {
+        text << " maxEval=" << config.maxEvaluations;
+    }
+    text
          << " Px=" << config.px
          << " Pm=" << config.pm
          << " sel=" << selection;
@@ -46,7 +50,7 @@ std::string describeConfig(const SAConfig& config) {
     if (config.startTemperature > 0.0) {
         text << " T0=" << config.startTemperature;
     } else {
-        text << " T0=auto";
+        text << " T0=auto(accept=" << config.startAcceptance << ")";
     }
     text << " cooling=" << config.coolingRate
          << " move=" << move;

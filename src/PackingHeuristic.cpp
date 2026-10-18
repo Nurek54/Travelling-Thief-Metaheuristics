@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-void packItems(const Problem& problem, const Distance& distance, Individual& individual) {
+void packItems(const Problem& problem, const Distance& distance, Individual& individual, bool profitCheck) {
     int n = problem.numCities;
     int m = problem.numItems;
 
@@ -55,13 +55,32 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
     // 5. Bierzemy od najlepszego (od konca), jesli sie miesci.
     individual.picked.assign(m, 0);
     int currentWeight = 0;
+    double vmax = problem.maxSpeed;
+    double vmin = problem.minSpeed;
+    double W = problem.capacity;
+
     for (int i = static_cast<int>(scores.size()) - 1; i >= 0; i--) {
         int k = scores[i].second;
         int weight = problem.items[k].weight;
 
-        if (currentWeight + weight <= problem.capacity) {
-            individual.picked[k] = 1;
-            currentWeight += weight;
+        // Nie miesci sie: pomijamy
+        if (currentWeight + weight > problem.capacity) {
+            continue;
         }
+
+        // Wersja "smart": czy zysk pokryje dodatkowy czas jazdy?
+        if (profitCheck) {
+            double dist = remainingDistance[positionInRoute[problem.items[k].city]];
+            double speedBefore = vmax - currentWeight * (vmax - vmin) / W;
+            double speedAfter = vmax - (currentWeight + weight) * (vmax - vmin) / W;
+            double extraTime = dist / speedAfter - dist / speedBefore;
+
+            if (problem.items[k].profit <= extraTime) {
+                continue; // nie oplaca sie
+            }
+        }
+
+        individual.picked[k] = 1;
+        currentWeight += weight;
     }
 }

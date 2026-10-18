@@ -63,6 +63,7 @@ static bool isBetter(const Individual& a, const Individual& b) {
 EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distance, Evaluator& evaluator,
                                   const EAConfig& config, Rng& rng) {
     EAResult result;
+    long long evaluationsAtStart = evaluator.getCount(); // do pilnowania limitu ocen
 
     // 1. Inicjalizacja: czesc populacji zachlanna (greedyInit), reszta losowa
     int greedyCount = static_cast<int>(config.greedyInit * config.popSize);
@@ -88,6 +89,12 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
 
     // 2. Kolejne pokolenia
     for (int generation = 1; generation <= config.generations; generation++) {
+        // Limit ocen: konczymy, gdy budzet sie wyczerpal
+        long long used = evaluator.getCount() - evaluationsAtStart;
+        if (config.maxEvaluations > 0 && used >= config.maxEvaluations) {
+            break;
+        }
+
         std::vector<Individual> newPopulation;
 
         // 2a. Elitaryzm: najlepsi przechodza bez zmian
