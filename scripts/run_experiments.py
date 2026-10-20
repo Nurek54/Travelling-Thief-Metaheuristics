@@ -1,8 +1,8 @@
 """Seria eksperymentow do strojenia i badania parametrow.
 
 Dla wybranego parametru odpala program C++ kilka razy (kazda wartosc = 10 uruchomien),
-zbiera wyniki do results/tuning/<eksperyment>__<instancja>.csv i rysuje wykres
-"wartosc parametru -> srednie G +/- odchylenie" do results/tuning/<eksperyment>__<instancja>.png.
+zbiera wyniki do results/tuning/<eksperyment>__<instancja>.csv, a na koncu tworzy wykresy
+i tabele przez scripts/plot_parameters.py (results/tuning/plots/, tabele.md, tabele.tex).
 
 Najpierw zbuduj program w CLion (najlepiej profil Release).
 
@@ -19,11 +19,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-import matplotlib
-matplotlib.use("Agg")  # rysowanie do pliku, bez okna
-import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
 import pandas as pd
+
+import plot_parameters  # czytelne wykresy i tabele (scripts/plot_parameters.py)
 
 ROOT = Path(__file__).resolve().parent.parent
 TUNING_DIR = ROOT / "results" / "tuning"
@@ -73,12 +71,6 @@ EXPERIMENTS = {
     "sa_greedy_start": ("sa", "greedy-start", [0, 1], {}),
 }
 
-# Kolory jak w plot_generations.py
-COLOR_SERIES = "#2a78d6"
-COLOR_GREEDY = "#52514e"
-COLOR_TEXT = "#0b0b0b"
-COLOR_MUTED = "#52514e"
-COLOR_GRID = "#e4e3df"
 
 
 def find_executable():
@@ -140,46 +132,12 @@ def run_experiment(exe, name, instance, greedy_best):
 
         run_program(exe, arguments)
 
-    plot_experiment(f"{name}__{instance}", param, out, greedy_best)
+    print_summary(out)
 
 
-def plot_experiment(name, param, csv_path, greedy_best):
+def print_summary(csv_path):
+    """Krotkie podsumowanie eksperymentu w konsoli."""
     data = pd.read_csv(csv_path, sep=";")
-    labels = [str(v) for v in data["label"]]
-    positions = list(range(len(labels)))
-
-    # Linia laczaca punkty tylko dla wartosci liczbowych (maja kolejnosc)
-    numeric = pd.api.types.is_numeric_dtype(data["label"])
-    line_style = "-" if numeric else "none"
-
-    fig, ax = plt.subplots(figsize=(8, 4.5), dpi=150)
-    ax.errorbar(positions, data["avg"], yerr=data["std"], color=COLOR_SERIES, linewidth=2,
-                linestyle=line_style, marker="o", markersize=7, capsize=5, label="avg ± std (10 uruchomień)")
-    ax.axhline(greedy_best, color=COLOR_GREEDY, linewidth=1.5, linestyle="--", label="zachłanny (best)")
-
-    ax.set_xticks(positions)
-    ax.set_xticklabels(labels)
-    ax.set_title(f"{name}: wpływ parametru {param}", color=COLOR_TEXT, fontsize=11, loc="left")
-    ax.set_xlabel(param, color=COLOR_MUTED)
-    ax.set_ylabel("G = zysk - czas", color=COLOR_MUTED)
-
-    ax.grid(True, color=COLOR_GRID, linewidth=0.8)
-    ax.set_axisbelow(True)
-    for side in ["top", "right"]:
-        ax.spines[side].set_visible(False)
-    for side in ["left", "bottom"]:
-        ax.spines[side].set_color(COLOR_GRID)
-    ax.tick_params(colors=COLOR_MUTED)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:,.0f}".replace(",", " ")))
-    ax.legend(frameon=False, labelcolor=COLOR_TEXT)
-    fig.tight_layout()
-
-    out = TUNING_DIR / f"{name}.png"
-    fig.savefig(out)
-    plt.close(fig)
-    print(f"Zapisano {out.relative_to(ROOT)}")
-
-    # Krotkie podsumowanie w konsoli
     print(data[["label", "avg", "std", "best", "evaluations", "time_ms"]].to_string(index=False))
 
 
@@ -227,6 +185,10 @@ def main():
         greedy_best = greedy_reference(exe, instance)
         for name in names:
             run_experiment(exe, name, instance, greedy_best)
+
+    # Wykresy i tabele ze wszystkich wynikow w results/tuning
+    print("\n=== Wykresy i tabele ===")
+    plot_parameters.main()
 
 
 if __name__ == "__main__":
