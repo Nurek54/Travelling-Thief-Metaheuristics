@@ -1,0 +1,89 @@
+% =====================================================================
+%  Sprawozdanie: Metody optymalizacji inspirowane naturą, Zadanie 0
+%  Travelling Thief Problem (TTP1): EA, SA, metoda losowa i zachłanna
+%  Kompilacja: pdfLaTeX (Overleaf: Menu -> Compiler -> pdfLaTeX)
+%  Wykresy wrzuć do folderu figures/ (z docs/wyniki/plots, docs/badania, docs/strojenie)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% --- Język i czcionki ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Układ strony ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.1}
+\usepackage{parskip}
+
+% --- Matematyka, tabele, rysunki ---
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pdflscape}
+\graphicspath{{figures/}}
+
+% --- Pseudokod i kod ---
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\floatname{algorithm}{Algorytm}
+\renewcommand{\listalgorithmname}{Spis algorytmów}
+\algrenewcommand\algorithmicrequire{\textbf{Wejście:}}
+\algrenewcommand\algorithmicensure{\textbf{Wyjście:}}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color{red!60!black},
+  numbers=left, numberstyle=\tiny\color{gray},
+  frame=single, breaklines=true, showstringspaces=false,
+  columns=fullflexible, keepspaces=true
+}
+
+% --- Linki ---
+\usepackage[hidelinks]{hyperref}
+
+% --- Pomocnicze makra ---
+% Miejsce do uzupełnienia (czerwony tekst, łatwo znaleźć przed oddaniem)
+\newcommand{\uzupelnij}[1]{\textcolor{red}{[\,#1\,]}}
+% Ramka zamiast brakującego wykresu (podmień na \includegraphics, gdy masz plik)
+\newcommand{\brakwykresu}[1]{%
+  \fbox{\parbox[c][4.5cm][c]{0.9\linewidth}{\centering\small\textcolor{gray}{Wykres: #1}}}}
+
+% =====================================================================
+\begin{document}
+
+\input{sections/00_strona_tytulowa}
+
+\tableofcontents
+\newpage
+
+% --- Rozdziały (każdy w osobnym pliku w folderze sections/) ---
+\input{sections/01_wstep}
+\input{sections/02_problem}
+\input{sections/03_instancje}
+\input{sections/04_implementacja}
+\input{sections/05_metodyka}
+\input{sections/06_strojenie}
+\input{sections/07_parametry_ea}
+\input{sections/08_parametry_sa}
+\input{sections/09_przebieg}
+\input{sections/10_porownanie}
+\input{sections/11_pytania}
+\input{sections/12_wnioski}
+
+% --- Bibliografia ---
+\input{sections/99_bibliografia}
+
+\end{document}

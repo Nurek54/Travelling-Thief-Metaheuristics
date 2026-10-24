@@ -36,3 +36,21 @@ else()
             $<$<CONFIG:Release>:-O3>
     )
 endif()
+
+# MinGW: biblioteki libgcc i libstdc++ wkompilowane w exe, zeby program dzialal
+# tez poza CLion (np. uruchamiany z PowerShell albo ze skryptu Pythona)
+if(MINGW)
+    target_link_options(travelling_thief_metaheuristics PRIVATE -static-libgcc -static-libstdc++)
+endif()
+
+# MinGW: libwinpthread nie da sie tu wkompilowac statycznie, wiec po kazdym buildzie
+# kopiujemy libwinpthread-1.dll obok exe (z folderu kompilatora)
+if(MINGW)
+    get_filename_component(MINGW_BIN_DIR "${CMAKE_CXX_COMPILER}" DIRECTORY)
+    if(EXISTS "${MINGW_BIN_DIR}/libwinpthread-1.dll")
+        add_custom_command(TARGET travelling_thief_metaheuristics POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                        "${MINGW_BIN_DIR}/libwinpthread-1.dll"
+                        $<TARGET_FILE_DIR:travelling_thief_metaheuristics>)
+    endif()
+endif()

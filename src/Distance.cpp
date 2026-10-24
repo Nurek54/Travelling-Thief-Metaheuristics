@@ -12,8 +12,8 @@ Distance::Distance(const Problem& problem)
         for (int j = 0; j < numCities_; ++j) {
             const City& b = problem.cities[j];
 
-            const double dx = static_cast<double>(a.x - b.x);
-            const double dy = static_cast<double>(a.y - b.y);
+            const double dx = a.x - b.x;
+            const double dy = a.y - b.y;
             const double euclidean = std::sqrt(dx * dx + dy * dy);
 
             matrix_[i * numCities_ + j] = static_cast<int>(std::ceil(euclidean));

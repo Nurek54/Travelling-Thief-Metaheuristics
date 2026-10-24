@@ -1,8 +1,8 @@
 """Tabela porownawcza metod (jak Tabela 1 w tresci zadania).
 
 Czyta results/wyniki.csv (zapisuje go program C++) i tworzy:
-  - results/tabela.md   (do sprawozdania / podgladu na GitHubie)
-  - results/tabela.csv  (do Excela)
+  - results/tabela.md
+  - results/tabela.csv (do Excela)
 
 Uruchomienie (z glownego folderu projektu):
     python scripts/make_table.py
@@ -36,10 +36,10 @@ def main():
     results = pd.read_csv(RESULTS_FILE, sep=";")
     results["instance"] = results["instance"].apply(lambda text: Path(text).stem)
 
-    instances = list(dict.fromkeys(results["instance"]))   # kolejnosc jak w pliku
+    instances = list(dict.fromkeys(results["instance"]))
     methods = [m for m in METHOD_NAMES if m in set(results["method"])]
 
-    # --- Markdown: osobna tabela dla kazdej metody (szeroka tabela bylaby nieczytelna) ---
+    # Osobna tabela dla kazdej metody, bo jedna szeroka bylaby nieczytelna
     lines = ["# Porównanie metod", ""]
     for method in methods:
         lines.append(f"## {METHOD_NAMES[method]}")
@@ -57,7 +57,6 @@ def main():
             )
         lines.append("")
 
-    # Krotkie podsumowanie: srednie wyniki wszystkich metod obok siebie
     lines.append("## Średnie wyniki (avg)")
     lines.append("")
     lines.append("| instancja | " + " | ".join(METHOD_NAMES[m] for m in methods) + " |")
@@ -73,7 +72,7 @@ def main():
     print("\n".join(lines))
     print(f"\nZapisano {TABLE_MD.relative_to(ROOT)}")
 
-    # --- CSV: jeden wiersz na instancje, kolumny metoda_statystyka (jak Tabela 1) ---
+    # CSV w ukladzie Tabeli 1: wiersz = instancja, kolumny = metoda_statystyka
     wide = results.pivot(index="instance", columns="method", values=STATS)
     wide = wide.reindex(index=instances)
     columns = []

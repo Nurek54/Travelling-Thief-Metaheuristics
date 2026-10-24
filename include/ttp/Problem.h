@@ -6,9 +6,10 @@
 
 #include "ttp/Item.h"
 
+// Wspolrzedne jako double: w czesci plikow sa liczby calkowite (a280), a w czesci z kropka (berlin52: 565.0)
 struct City {
-    int x = 0;
-    int y = 0;
+    double x = 0.0;
+    double y = 0.0;
 };
 
 struct Problem {

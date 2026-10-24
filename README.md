@@ -36,7 +36,7 @@ C++ (algorytmy) + Python (wykresy, tabele).
 ### Pojedynczy eksperyment i strojenie
 Program uruchomiony z argumentami liczy jedną metodę na jednej instancji i **dopisuje** wynik do CSV w `results/`:
 ```
-travelling_thief_metaheuristics.exe --method ea --instance extra/a280_n837_uncorr-similar-weights_05.ttp --gen 500 --mut swap --pm 0.005 --greedy-init 0.5 --runs 10 --out tuning/moje.csv
+travelling_thief_metaheuristics.exe --method ea --instance extra/kroA100_n495_uncorr-similar-weights_05.ttp --gen 500 --mut swap --pm 0.005 --greedy-init 0.5 --runs 10 --out tuning/moje.csv
 travelling_thief_metaheuristics.exe --help
 ```
 Seria eksperymentów (jeden parametr naraz, 10 uruchomień na wartość, CSV + wykres w `results/tuning/`):

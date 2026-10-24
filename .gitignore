@@ -4,3 +4,5 @@ results/*
 !results/.gitkeep
 __pycache__/
 .venv/
+results_stare_a280/
+docs/raport/sections/

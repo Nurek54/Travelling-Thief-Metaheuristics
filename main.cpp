@@ -78,7 +78,7 @@ bool testOperators() {
     std::cout << "                     (oczekiwane |826345107|)\n";
 
     // 10 000 losowych krzyzowan i mutacji na 280 miastach: dziecko zawsze musi byc permutacja
-    const Problem problem = loadProblem(std::string(TTP_DATA_DIR) + "/easy/a280_n279_uncorr_01.ttp");
+    const Problem problem = loadProblem(std::string(TTP_DATA_DIR) + "/hard/a280_n1395_uncorr-similar-weights_05.ttp");
     Rng rng(123);
     int errors = 0;
     for (int t = 0; t < 10000; t++) {
@@ -119,7 +119,7 @@ void printResult(std::ofstream& csv, const std::string& instance, const std::str
         << evaluations << ';' << timeMs << '\n';
 }
 
-// Sciezka pliku z historia, np. results/history/a280_n279_uncorr_01_run01.csv
+// Sciezka pliku z historia, np. results/history/a280_n1395_uncorr-similar-weights_05_run01.csv
 std::string historyPath(const std::string& folder, const std::string& instance, int run) {
     std::string name = std::filesystem::path(instance).stem().string();
     std::string runNumber = std::to_string(run + 1);
@@ -192,7 +192,7 @@ void runSaSeries(std::ofstream& csv, const std::string& instance, const std::str
 // ======================================================================
 // TRYB POJEDYNCZEGO EKSPERYMENTU (uruchomienie z argumentami)
 // Przyklad:
-//   travelling_thief_metaheuristics.exe --method ea --instance extra/a280_n837_uncorr-similar-weights_05.ttp
+//   travelling_thief_metaheuristics.exe --method ea --instance extra/kroA100_n495_uncorr-similar-weights_05.ttp
 //       --gen 500 --pm 0.2 --runs 10 --out tuning/ea_gen.csv --label gen=500
 // ======================================================================
 
@@ -202,7 +202,7 @@ void printHelp() {
         "Bez argumentow: pelne porownanie metod na 7 instancjach.\n\n"
         "Wspolne:\n"
         "  --method    random | greedy | ea | sa       (domyslnie ea)\n"
-        "  --instance  sciezka wzgledem data/          (domyslnie extra/a280_n837_uncorr-similar-weights_05.ttp)\n"
+        "  --instance  sciezka wzgledem data/          (domyslnie extra/kroA100_n495_uncorr-similar-weights_05.ttp)\n"
         "  --runs      liczba uruchomien ea/sa         (domyslnie 10)\n"
         "  --seed      seed pierwszego uruchomienia    (domyslnie 42)\n"
         "  --out       plik CSV, do ktorego DOPISAC wynik (wzgledem results/, domyslnie experiments.csv)\n"
@@ -297,7 +297,7 @@ int runSingleExperiment(int argc, char* argv[]) {
 
     // 2. Wspolne ustawienia
     std::string method = getText(args, "method", "ea");
-    std::string instance = getText(args, "instance", "extra/a280_n837_uncorr-similar-weights_05.ttp");
+    std::string instance = getText(args, "instance", "extra/kroA100_n495_uncorr-similar-weights_05.ttp");
     int runs = getInt(args, "runs", 10);
     unsigned int seed = static_cast<unsigned int>(getInt(args, "seed", 42));
     std::string label = getText(args, "label", "");
@@ -437,13 +437,13 @@ int main(int argc, char* argv[]) {
 
         // 7 instancji: 2 latwe, 2 srednie, 2 trudne, 1 extra
         std::vector<std::string> instances = {
-            "easy/a280_n279_uncorr_01.ttp",
-            "easy/a280_n279_bounded-strongly-corr_01.ttp",
-            "medium/a280_n1395_uncorr-similar-weights_05.ttp",
-            "medium/a280_n1395_bounded-strongly-corr_05.ttp",
-            "hard/a280_n2790_uncorr_10.ttp",
-            "hard/a280_n2790_bounded-strongly-corr_10.ttp",
-            "extra/a280_n837_uncorr-similar-weights_05.ttp",
+            "easy/berlin52_n255_uncorr-similar-weights_05.ttp",
+            "easy/berlin52_n255_bounded-strongly-corr_05.ttp",
+            "medium/kroA150_n745_uncorr-similar-weights_05.ttp",
+            "medium/kroA150_n745_bounded-strongly-corr_05.ttp",
+            "hard/a280_n1395_uncorr-similar-weights_05.ttp",
+            "hard/a280_n1395_bounded-strongly-corr_05.ttp",
+            "extra/kroA100_n495_uncorr-similar-weights_05.ttp",
         };
 
         unsigned int seed = 42;
@@ -455,17 +455,21 @@ int main(int argc, char* argv[]) {
         SAConfig saStart;
 
         // EA i SA dostrojone (docs/STROJENIE.md), z limitem ocen = budget
+        // Konfiguracje wybrane w drugim etapie strojenia (ea_kombinacje, sa_kombinacje)
         EAConfig eaTuned;
         eaTuned.generations = 1000;          // gorny limit, i tak konczy sie po wyczerpaniu budzetu
         eaTuned.maxEvaluations = budget;
-        eaTuned.greedyInit = 0.5;            // polowa populacji startowej z algorytmu zachlannego
-        eaTuned.mutation = MutationType::Swap;
-        eaTuned.pm = 0.002;
+        eaTuned.greedyInit = 1.0;            // cala populacja startowa z algorytmu zachlannego
+        eaTuned.mutation = MutationType::Inversion;
+        eaTuned.pm = 0.5;
+        eaTuned.px = 1.0;
+        eaTuned.elitism = 5;
+        eaTuned.tourSize = 10;
 
         SAConfig saTuned;
         saTuned.iterations = budget - 1;     // +1 ocena rozwiazania startowego = budget
         saTuned.startTemperature = 10.0;     // przy starcie zachlannym automatyczne T0 jest za wysokie
-        saTuned.move = MutationType::Swap;
+        saTuned.move = MutationType::Inversion;
         saTuned.greedyStart = true;
 
         std::cout << "Budzet: " << budget << " ocen na uruchomienie, " << runs << " uruchomien\n"
