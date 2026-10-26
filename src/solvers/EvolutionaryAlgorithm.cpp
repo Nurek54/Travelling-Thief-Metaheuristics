@@ -1,4 +1,3 @@
-// Implementacja EvolutionaryAlgorithm.h
 #include "ttp/solvers/EvolutionaryAlgorithm.h"
 
 #include <algorithm>
@@ -63,7 +62,7 @@ static bool isBetter(const Individual& a, const Individual& b) {
 EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distance, Evaluator& evaluator,
                                   const EAConfig& config, Rng& rng) {
     EAResult result;
-    long long evaluationsAtStart = evaluator.getCount(); // do pilnowania limitu ocen
+    long long evaluationsAtStart = evaluator.getCount();
 
     // 1. Inicjalizacja: czesc populacji zachlanna (greedyInit), reszta losowa
     int greedyCount = static_cast<int>(config.greedyInit * config.popSize);

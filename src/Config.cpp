@@ -1,4 +1,3 @@
-// Implementacja Config.h
 #include "ttp/Config.h"
 
 #include <sstream>

@@ -1,4 +1,3 @@
-// Implementacja Stats.h
 #include "ttp/Stats.h"
 
 #include <cmath>
@@ -9,7 +8,6 @@ Stats computeStats(const std::vector<double>& values) {
         return stats;
     }
 
-    // best, worst i suma w jednej petli
     stats.best = values[0];
     stats.worst = values[0];
     double sum = 0.0;

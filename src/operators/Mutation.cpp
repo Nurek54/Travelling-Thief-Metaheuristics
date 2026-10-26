@@ -1,4 +1,3 @@
-// Implementacja Mutation.h
 #include "ttp/operators/Mutation.h"
 
 void swapCities(std::vector<int>& route, int i, int j) {

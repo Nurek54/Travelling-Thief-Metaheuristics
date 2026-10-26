@@ -1,4 +1,3 @@
-// Implementacja Crossover.h
 #include "ttp/operators/Crossover.h"
 
 std::vector<int> orderCrossover(const std::vector<int>& parent1, const std::vector<int>& parent2, int a, int b) {

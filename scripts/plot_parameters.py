@@ -310,7 +310,7 @@ def plot_two_variants(name, per_instance, greedy_best):
     ax.set_xticks(positions)
     ax.set_xticklabels(instances)
     ax.set_ylabel("B − A [% wyniku zachłannego]", color=COLOR_MUTED)
-    ax.set_title(f"{title}\n{name_b} względem {name_a} (+ lepiej, − gorzej; wąsy: std)",
+    ax.set_title(f"{title}\n{name_b} względem {name_a} (+ lepiej, − gorzej; słupki błędów: odchylenie standardowe)",
                  color=COLOR_TEXT, fontsize=10, loc="left")
     style_axes(ax)
     ax.grid(False, axis="x")
@@ -351,7 +351,7 @@ def plot_two_variants_combined(two_variant_experiments, greedy_best):
     ax.set_xticklabels(group_labels, fontsize=8)
     ax.set_ylabel("B − A [% wyniku zachłannego]", color=COLOR_MUTED)
     ax.set_title("Eksperymenty z 2 wariantami: różnica średnich B − A (+ lepiej, − gorzej),\n"
-                 "w % najlepszego wyniku zachłannego na danej instancji; wąsy: std",
+                 "w % najlepszego wyniku zachłannego na danej instancji; słupki błędów: odchylenie standardowe",
                  color=COLOR_TEXT, fontsize=10, loc="left")
     style_axes(ax)
     ax.grid(False, axis="x")

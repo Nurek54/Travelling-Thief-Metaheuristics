@@ -1,4 +1,3 @@
-// Implementacja Distance.h
 #include "ttp/Distance.h"
 
 #include <cmath>

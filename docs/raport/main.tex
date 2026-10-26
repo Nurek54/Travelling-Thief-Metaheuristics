@@ -4,7 +4,7 @@
 %  Kompilacja: pdfLaTeX (Overleaf: Menu -> Compiler -> pdfLaTeX)
 %  Wykresy wrzuć do folderu figures/ (z docs/wyniki/plots, docs/badania, docs/strojenie)
 % =====================================================================
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 % --- Język i czcionki ---
 \usepackage[utf8]{inputenc}
@@ -14,9 +14,9 @@
 \usepackage{microtype}
 
 % --- Układ strony ---
-\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage[a4paper, margin=2cm]{geometry}
 \usepackage{setspace}
-\setstretch{1.1}
+\setstretch{1.0}
 \usepackage{parskip}
 
 % --- Matematyka, tabele, rysunki ---
@@ -66,8 +66,9 @@
 
 \input{sections/00_strona_tytulowa}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
-\newpage
+\bigskip
 
 % --- Rozdziały (każdy w osobnym pliku w folderze sections/) ---
 \input{sections/01_wstep}

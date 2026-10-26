@@ -1,4 +1,3 @@
-// Implementacja Individual.h
 #include "ttp/Individual.h"
 
 #include <algorithm>
@@ -7,7 +6,7 @@
 Individual makeIdentityIndividual(const Problem& problem) {
     Individual individual;
     individual.route.resize(problem.numCities);
-    std::iota(individual.route.begin(), individual.route.end(), 0); // 0, 1, 2, ..., n-1
+    std::iota(individual.route.begin(), individual.route.end(), 0);
     individual.picked.assign(problem.numItems, 0);
     return individual;
 }

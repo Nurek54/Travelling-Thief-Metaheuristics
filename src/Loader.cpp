@@ -1,4 +1,3 @@
-// Implementacja Loader.h
 #include "ttp/Loader.h"
 
 #include <fstream>
@@ -14,7 +13,7 @@ enum class Section {
     Items
 };
 
-// Usuwa biale znaki (spacje, tabulatory) z poczatku i konca tekstu.
+// tnie biale znaki z poczatku i konca tekstu
 std::string trim(const std::string& text) {
     const char* whitespace = " \t";
     const auto begin = text.find_first_not_of(whitespace);
@@ -50,7 +49,6 @@ void parseHeaderLine(const std::string& line, Problem& problem) {
     } else if (key == "RENTING RATIO") {
         problem.rentingRatio = std::stod(value);
     }
-    // KNAPSACK DATA TYPE i EDGE_WEIGHT_TYPE pomijamy, nie wplywaja na obliczenia.
 }
 
 // Linia miasta w formacie "id x y".
@@ -64,7 +62,7 @@ void parseCityLine(const std::string& line, Problem& problem) {
     problem.cities.push_back(city);
 }
 
-// Linia przedmiotu w formacie "id profit weight city". Numeracja w pliku od 1, w kodzie od 0.
+// Linia przedmiotu w formacie "id profit weight city"
 void parseItemLine(const std::string& line, Problem& problem) {
     std::istringstream iss(line);
     Item item;
@@ -76,7 +74,6 @@ void parseItemLine(const std::string& line, Problem& problem) {
     problem.items.push_back(item);
 }
 
-// Sprawdza, czy wczytane dane zgadzaja sie z naglowkiem.
 void validate(const Problem& problem, const std::string& path) {
     if (static_cast<int>(problem.cities.size()) != problem.numCities) {
         throw std::runtime_error("Liczba miast nie zgadza sie z DIMENSION w pliku: " + path);
@@ -119,17 +116,14 @@ Problem loadProblem(const std::string& path) {
     std::string line;
 
     while (std::getline(file, line)) {
-        // Usun '\r' z konca (pliki maja windowsowe konce linii)
         if (!line.empty() && line.back() == '\r') {
             line.pop_back();
         }
 
-        // Pomin puste linie
         if (trim(line).empty()) {
             continue;
         }
 
-        // Przelaczanie sekcji (te linie same nie sa danymi)
         if (line.starts_with("NODE_COORD_SECTION")) {
             section = Section::Cities;
             continue;
@@ -139,7 +133,6 @@ Problem loadProblem(const std::string& path) {
             continue;
         }
 
-        // Linia z danymi: co z nia zrobic, zalezy od sekcji
         switch (section) {
             case Section::Header:
                 parseHeaderLine(line, problem);

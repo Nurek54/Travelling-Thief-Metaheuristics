@@ -1,4 +1,3 @@
-// Implementacja Logger.h
 #include "ttp/Logger.h"
 
 #include <filesystem>
@@ -7,7 +6,6 @@
 #include <stdexcept>
 
 void saveHistoryCsv(const std::string& path, const std::vector<GenerationStats>& history) {
-    // Tworzymy folder, jesli go nie ma (np. results/history)
     std::filesystem::path folder = std::filesystem::path(path).parent_path();
     if (!folder.empty()) {
         std::filesystem::create_directories(folder);

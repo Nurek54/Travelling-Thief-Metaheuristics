@@ -1,4 +1,3 @@
-// Implementacja SimulatedAnnealing.h
 #include "ttp/solvers/SimulatedAnnealing.h"
 
 #include <cmath>

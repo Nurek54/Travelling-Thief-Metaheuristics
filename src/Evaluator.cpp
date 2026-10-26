@@ -1,4 +1,3 @@
-// Implementacja Evaluator.h
 #include "ttp/Evaluator.h"
 
 #include "ttp/PackingHeuristic.h"
@@ -9,7 +8,7 @@ Evaluator::Evaluator(const Problem& problem, const Distance& distance, bool smar
 double Evaluator::evaluate(Individual& individual) {
     count_++;
 
-    // Najpierw wybieramy przedmioty dla tej trasy
+    // wybieramy przedmioty dla tej trasy
     packItems(problem_, distance_, individual, smartPacking_);
 
     int n = problem_.numCities;
@@ -26,11 +25,11 @@ double Evaluator::evaluate(Individual& individual) {
         int from = individual.route[pos - 1];
         int to = individual.route[pos];
 
-        // Predkosc zalezy od tego, ile niesiemy
+        // Predkosc zalezy od tego, ile niesie
         double v = vmax - currentWeight * (vmax - vmin) / W;
         time += distance_.get(from, to) / v;
 
-        // Po dojechaniu zbieramy wybrane przedmioty z tego miasta
+        // Po dojechaniu zbiera przedmioty z tego miasta
         for (int k : problem_.itemsByCity[to]) {
             if (individual.picked[k] == 1) {
                 currentWeight += problem_.items[k].weight;

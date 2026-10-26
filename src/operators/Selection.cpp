@@ -1,4 +1,3 @@
-// Implementacja Selection.h
 #include "ttp/operators/Selection.h"
 
 int tournamentSelection(const std::vector<Individual>& population, int tourSize, Rng& rng) {

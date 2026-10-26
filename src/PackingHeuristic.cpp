@@ -1,4 +1,3 @@
-// Implementacja PackingHeuristic.h
 #include "ttp/PackingHeuristic.h"
 
 #include <algorithm>
@@ -10,7 +9,6 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
     int m = problem.numItems;
 
     // 1. Na ktorej pozycji trasy jest kazde miasto?
-    //    positionInRoute[miasto] = pozycja
     std::vector<int> positionInRoute(n);
     for (int pos = 0; pos < n; pos++) {
         int city = individual.route[pos];
@@ -18,7 +16,6 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
     }
 
     // 2. Ile drogi zostalo od pozycji pos do konca trasy (razem z powrotem do startu)?
-    //    Idziemy od konca trasy do poczatku i dodajemy odleglosci.
     std::vector<double> remainingDistance(n);
     int lastCity = individual.route[n - 1];
     int startCity = individual.route[0];
@@ -29,30 +26,29 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
         remainingDistance[pos] = remainingDistance[pos + 1] + distance.get(cityHere, cityNext);
     }
 
-    // 3. Ocena kazdego przedmiotu. Trzymamy pary (ocena, numer przedmiotu).
+    // 3. Ocena kazdego przedmiotu. Trzymam pary (ocena, numer przedmiotu).
     std::vector<std::pair<double, int>> scores;
     for (int k = 0; k < m; k++) {
         const Item& item = problem.items[k];
         int pos = positionInRoute[item.city];
 
-        // W miescie startowym nic nie zbieramy
         if (pos == 0) {
             continue;
         }
 
         double dist = remainingDistance[pos];
         if (dist < 1.0) {
-            dist = 1.0; // zabezpieczenie przed dzieleniem przez 0
+            dist = 1.0;
         }
 
         double score = item.profit / (item.weight * dist);
         scores.push_back(std::make_pair(score, k));
     }
 
-    // 4. Sortujemy rosnaco po ocenie, wiec najlepsze sa na koncu.
+    // 4. Sortuj rosnaco po ocenie, wiec najlepsze na koncu.
     std::sort(scores.begin(), scores.end());
 
-    // 5. Bierzemy od najlepszego (od konca), jesli sie miesci.
+    // 5. Bierz od najlepszego (od konca), jesli sie miesci.
     individual.picked.assign(m, 0);
     int currentWeight = 0;
     double vmax = problem.maxSpeed;
@@ -63,12 +59,10 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
         int k = scores[i].second;
         int weight = problem.items[k].weight;
 
-        // Nie miesci sie: pomijamy
         if (currentWeight + weight > problem.capacity) {
             continue;
         }
 
-        // Wersja "smart": czy zysk pokryje dodatkowy czas jazdy?
         if (profitCheck) {
             double dist = remainingDistance[positionInRoute[problem.items[k].city]];
             double speedBefore = vmax - currentWeight * (vmax - vmin) / W;
@@ -76,7 +70,7 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
             double extraTime = dist / speedAfter - dist / speedBefore;
 
             if (problem.items[k].profit <= extraTime) {
-                continue; // nie oplaca sie
+                continue;
             }
         }
 

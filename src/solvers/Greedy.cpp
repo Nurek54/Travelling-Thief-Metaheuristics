@@ -1,4 +1,3 @@
-// Implementacja Greedy.h
 #include "ttp/solvers/Greedy.h"
 
 #include <vector>

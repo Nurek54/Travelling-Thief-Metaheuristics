@@ -1,4 +1,3 @@
-// Implementacja RandomSearch.h
 #include "ttp/solvers/RandomSearch.h"
 
 SolverResult runRandomSearch(const Problem& problem, Evaluator& evaluator, Rng& rng, int count) {
