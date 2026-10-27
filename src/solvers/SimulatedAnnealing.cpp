@@ -5,7 +5,6 @@
 #include "ttp/operators/Mutation.h"
 #include "ttp/solvers/Greedy.h"
 
-// Robi z osobnika jego sasiada: jedna zamiana dwoch miast albo jedno odwrocenie fragmentu
 static void makeNeighbour(Individual& individual, MutationType move, Rng& rng) {
     int n = static_cast<int>(individual.route.size());
     int i = rng.uniformInt(0, n - 1);
@@ -25,11 +24,9 @@ static void makeNeighbour(Individual& individual, MutationType move, Rng& rng) {
     individual.evaluated = false;
 }
 
-// Automatyczna temperatura poczatkowa.
-// Sprawdzamy 100 losowych ruchow od rozwiazania startowego i liczymy, o ile srednio pogarszaja wynik.
-// Temperature dobieramy tak, zeby na starcie taki typowy gorszy ruch byl akceptowany
-// z prawdopodobienstwem acceptance (np. 0.5 = w polowie przypadkow):
-// exp(-srednie_pogorszenie / T) = acceptance  ->  T = srednie_pogorszenie / (-ln(acceptance))
+// Automatyczne T0: srednie pogorszenie po 100 losowych ruchach od startu.
+// Taki ruch ma byc na starcie przyjmowany z prawdopodobienstwem acceptance:
+// T = srednie_pogorszenie / (-ln(acceptance))
 static double estimateStartTemperature(const Individual& start, Evaluator& evaluator, MutationType move,
                                        double acceptance, Rng& rng) {
     double sumWorse = 0.0;
@@ -67,7 +64,7 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
     }
     evaluator.evaluate(current);
 
-    // 2. Temperatura poczatkowa: podana albo dobrana automatycznie (wokol rozwiazania startowego)
+    // 2. Temperatura poczatkowa: podana albo automatyczna
     double temperature = config.startTemperature;
     if (temperature <= 0.0) {
         temperature = estimateStartTemperature(current, evaluator, config.move, config.startAcceptance, rng);
@@ -78,33 +75,30 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
 
     // 3. Glowna petla
     for (int iteration = 1; iteration <= config.iterations; iteration++) {
-        // 3a. Sasiad = kopia aktualnego rozwiazania z jednym ruchem
+        // Sasiad = kopia aktualnego rozwiazania z jednym ruchem
         Individual neighbour = current;
         makeNeighbour(neighbour, config.move, rng);
         evaluator.evaluate(neighbour);
 
-        // 3b. Czy przechodzimy do sasiada?
-        double delta = neighbour.fitness - current.fitness;  // > 0 oznacza poprawe
+        // Czy przechodzimy do sasiada?
+        double delta = neighbour.fitness - current.fitness;
         if (delta >= 0) {
-            current = neighbour;  // lepszy albo rowny: zawsze bierzemy
+            current = neighbour;
         } else {
             // gorszy: bierzemy z prawdopodobienstwem exp(delta / T)
-            // (delta jest ujemna, wiec wynik jest miedzy 0 a 1)
             double acceptProbability = std::exp(delta / temperature);
             if (rng.uniformReal() < acceptProbability) {
                 current = neighbour;
             }
         }
 
-        // 3c. Zapamietujemy najlepsze rozwiazanie z calego przebiegu
         if (current.fitness > result.best.fitness) {
             result.best = current;
         }
 
-        // 3d. Schladzanie
+        // Schladzanie
         temperature = temperature * config.coolingRate;
 
-        // 3e. Co logEvery iteracji zapisujemy stan do historii
         if (iteration % config.logEvery == 0) {
             result.history.push_back({iteration, result.best.fitness, current.fitness, temperature});
         }

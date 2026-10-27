@@ -3,10 +3,8 @@
 int tournamentSelection(const std::vector<Individual>& population, int tourSize, Rng& rng) {
     int size = static_cast<int>(population.size());
 
-    // Pierwszy uczestnik turnieju
     int bestIndex = rng.uniformInt(0, size - 1);
 
-    // Pozostali uczestnicy: jesli ktorys jest lepszy, zostaje zwyciezca
     for (int t = 1; t < tourSize; t++) {
         int index = rng.uniformInt(0, size - 1);
         if (population[index].fitness > population[bestIndex].fitness) {
@@ -34,7 +32,6 @@ int rouletteSelection(const std::vector<Individual>& population, Rng& rng) {
         total += population[i].fitness - worst;
     }
 
-    // Wszyscy rowni: wybieramy losowo
     if (total <= 0.0) {
         return rng.uniformInt(0, size - 1);
     }
@@ -49,5 +46,5 @@ int rouletteSelection(const std::vector<Individual>& population, Rng& rng) {
         }
     }
 
-    return size - 1; // na wypadek bledow zaokraglen
+    return size - 1;
 }

@@ -13,7 +13,6 @@ enum class Section {
     Items
 };
 
-// tnie biale znaki z poczatku i konca tekstu
 std::string trim(const std::string& text) {
     const char* whitespace = " \t";
     const auto begin = text.find_first_not_of(whitespace);
@@ -24,7 +23,6 @@ std::string trim(const std::string& text) {
     return text.substr(begin, end - begin + 1);
 }
 
-// Linia naglowka w formacie "KLUCZ: wartosc".
 void parseHeaderLine(const std::string& line, Problem& problem) {
     const auto colon = line.find(':');
     if (colon == std::string::npos) {
@@ -51,7 +49,6 @@ void parseHeaderLine(const std::string& line, Problem& problem) {
     }
 }
 
-// Linia miasta w formacie "id x y".
 void parseCityLine(const std::string& line, Problem& problem) {
     std::istringstream iss(line);
     int id = 0;
@@ -62,7 +59,6 @@ void parseCityLine(const std::string& line, Problem& problem) {
     problem.cities.push_back(city);
 }
 
-// Linia przedmiotu w formacie "id profit weight city"
 void parseItemLine(const std::string& line, Problem& problem) {
     std::istringstream iss(line);
     Item item;
@@ -95,7 +91,6 @@ void validate(const Problem& problem, const std::string& path) {
     }
 }
 
-// Dla kazdego miasta lista indeksow przedmiotow, ktore w nim leza.
 void buildItemsByCity(Problem& problem) {
     problem.itemsByCity.assign(problem.numCities, {});
     for (const Item& item : problem.items) {
@@ -103,7 +98,7 @@ void buildItemsByCity(Problem& problem) {
     }
 }
 
-} // namespace
+}
 
 Problem loadProblem(const std::string& path) {
     std::ifstream file(path);

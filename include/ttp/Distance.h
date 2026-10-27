@@ -1,4 +1,3 @@
-// Odleglosc ceil(euklidesowa) miedzy miastami, liczona raz na starcie.
 #pragma once
 
 #include <vector>
@@ -13,5 +12,5 @@ public:
 
 private:
     int numCities_ = 0;
-    std::vector<int> matrix_;  // plaska macierz n*n, element (i, j) pod indeksem i * n + j
+    std::vector<int> matrix_;
 };

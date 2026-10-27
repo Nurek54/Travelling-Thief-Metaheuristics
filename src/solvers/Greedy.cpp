@@ -13,12 +13,10 @@ Individual makeNearestNeighbourIndividual(const Problem& problem, const Distance
     individual.route.push_back(current);
     visited[current] = true;
 
-    // Dokladamy kolejne n - 1 miast
     for (int step = 1; step < n; step++) {
         int nearest = -1;
         int nearestDistance = 0;
 
-        // Szukamy najblizszego nieodwiedzonego miasta
         for (int city = 0; city < n; city++) {
             if (visited[city]) {
                 continue;

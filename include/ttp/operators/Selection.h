@@ -1,5 +1,3 @@
-// Selekcja: turniej, ruletka. Obie zwracaja INDEKS wybranego osobnika w populacji,
-// zeby nie kopiowac osobnikow przy kazdym wyborze.
 #pragma once
 
 #include <vector>
@@ -12,5 +10,5 @@
 int tournamentSelection(const std::vector<Individual>& population, int tourSize, Rng& rng);
 
 // Ruletka: szansa wyboru proporcjonalna do jakosci.
-// G moze byc ujemne, wiec od kazdego G odejmujemy najgorsze G w populacji (skalowanie).
+// G moze byc ujemne, wiec od kazdego G odejmujemy najgorsze G w populacji.
 int rouletteSelection(const std::vector<Individual>& population, Rng& rng);

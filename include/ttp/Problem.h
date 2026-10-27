@@ -1,4 +1,3 @@
-// Dane instancji: n, m, W, vmin, vmax, R, wspolrzedne, przedmioty, itemsByCity.
 #pragma once
 
 #include <string>
@@ -6,7 +5,6 @@
 
 #include "ttp/Item.h"
 
-// Wspolrzedne jako double: w czesci plikow sa liczby calkowite (a280), a w czesci z kropka (berlin52: 565.0)
 struct City {
     double x = 0.0;
     double y = 0.0;

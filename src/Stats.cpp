@@ -22,7 +22,6 @@ Stats computeStats(const std::vector<double>& values) {
     }
     stats.avg = sum / values.size();
 
-    // odchylenie standardowe: pierwiastek ze sredniej kwadratow roznic od sredniej
     double sumSquares = 0.0;
     for (double value : values) {
         double diff = value - stats.avg;

@@ -1,4 +1,3 @@
-// Metoda zachlanna: najblizszy sasiad, uruchomiony z kazdego miasta startowego.
 #pragma once
 
 #include "ttp/Distance.h"
@@ -9,5 +8,4 @@
 // Trasa "najblizszego sasiada": z miasta startCity zawsze idziemy do najblizszego nieodwiedzonego.
 Individual makeNearestNeighbourIndividual(const Problem& problem, const Distance& distance, int startCity);
 
-// Uruchamia najblizszego sasiada z kazdego miasta (n uruchomien).
 SolverResult runGreedy(const Problem& problem, const Distance& distance, Evaluator& evaluator);

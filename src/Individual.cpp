@@ -25,7 +25,7 @@ bool isValidRoute(const Individual& individual, int numCities) {
     std::vector<char> seen(numCities, 0);
     for (const int city : individual.route) {
         if (city < 0 || city >= numCities || seen[city]) {
-            return false; // miasto spoza zakresu albo powtorzone
+            return false;
         }
         seen[city] = 1;
     }

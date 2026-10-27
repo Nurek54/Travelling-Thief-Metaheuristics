@@ -7,7 +7,6 @@ void swapCities(std::vector<int>& route, int i, int j) {
 }
 
 void reverseSegment(std::vector<int>& route, int i, int j) {
-    // Idziemy z dwoch koncow do srodka i zamieniamy
     while (i < j) {
         swapCities(route, i, j);
         i++;
@@ -27,7 +26,6 @@ void mutateSwap(Individual& individual, double pm, Rng& rng) {
         }
     }
 
-    // Trasa sie zmienila, wiec stara ocena juz nieaktualna
     if (changed) {
         individual.evaluated = false;
     }
@@ -35,14 +33,13 @@ void mutateSwap(Individual& individual, double pm, Rng& rng) {
 
 void mutateInversion(Individual& individual, double pm, Rng& rng) {
     if (rng.uniformReal() >= pm) {
-        return; // tym razem bez mutacji
+        return;
     }
 
     int n = static_cast<int>(individual.route.size());
     int i = rng.uniformInt(0, n - 1);
     int j = rng.uniformInt(0, n - 1);
 
-    // Chcemy, zeby i bylo mniejsze od j
     if (i > j) {
         int temp = i;
         i = j;

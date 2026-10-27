@@ -7,7 +7,6 @@
 #include "ttp/operators/Selection.h"
 #include "ttp/solvers/Greedy.h"
 
-// Wybiera rodzica wedlug ustawionej metody selekcji
 static int selectParent(const std::vector<Individual>& population, const EAConfig& config, Rng& rng) {
     if (config.selection == SelectionType::Roulette) {
         return rouletteSelection(population, rng);
@@ -15,7 +14,6 @@ static int selectParent(const std::vector<Individual>& population, const EAConfi
     return tournamentSelection(population, config.tourSize, rng);
 }
 
-// Tworzy dziecko wedlug ustawionego krzyzowania
 static Individual makeChild(const Individual& parent1, const Individual& parent2, const EAConfig& config, Rng& rng) {
     if (config.crossover == CrossoverType::PMX) {
         return crossoverPMX(parent1, parent2, rng);
@@ -23,7 +21,6 @@ static Individual makeChild(const Individual& parent1, const Individual& parent2
     return crossoverOX(parent1, parent2, rng);
 }
 
-// Mutuje osobnika wedlug ustawionej mutacji
 static void mutate(Individual& individual, const EAConfig& config, Rng& rng) {
     if (config.mutation == MutationType::Swap) {
         mutateSwap(individual, config.pm, rng);
@@ -32,7 +29,6 @@ static void mutate(Individual& individual, const EAConfig& config, Rng& rng) {
     }
 }
 
-// best / avg / worst w populacji
 static GenerationStats computeGenerationStats(const std::vector<Individual>& population, int generation) {
     GenerationStats stats;
     stats.generation = generation;
@@ -54,7 +50,6 @@ static GenerationStats computeGenerationStats(const std::vector<Individual>& pop
     return stats;
 }
 
-// Do sortowania: lepszy (wieksze G) idzie na poczatek
 static bool isBetter(const Individual& a, const Individual& b) {
     return a.fitness > b.fitness;
 }
@@ -71,7 +66,6 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
     for (int i = 0; i < config.popSize; i++) {
         Individual individual;
         if (i < greedyCount) {
-            // najblizszy sasiad z losowego miasta startowego
             int startCity = rng.uniformInt(0, problem.numCities - 1);
             individual = makeNearestNeighbourIndividual(problem, distance, startCity);
         } else {
@@ -88,7 +82,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
 
     // 2. Kolejne pokolenia
     for (int generation = 1; generation <= config.generations; generation++) {
-        // Limit ocen: konczymy, gdy budzet sie wyczerpal
+        // Koniec po wyczerpaniu limitu ocen
         long long used = evaluator.getCount() - evaluationsAtStart;
         if (config.maxEvaluations > 0 && used >= config.maxEvaluations) {
             break;
@@ -96,7 +90,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
 
         std::vector<Individual> newPopulation;
 
-        // 2a. Elitaryzm: najlepsi przechodza bez zmian
+        // Elitaryzm: najlepsi przechodza bez zmian
         if (config.elitism > 0) {
             std::vector<Individual> sorted = population;
             std::sort(sorted.begin(), sorted.end(), isBetter);
@@ -105,7 +99,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
             }
         }
 
-        // 2b. Reszta populacji: selekcja -> krzyzowanie -> mutacja -> ocena
+        // Reszta populacji: selekcja, krzyzowanie, mutacja, ocena
         while (static_cast<int>(newPopulation.size()) < config.popSize) {
             int index1 = selectParent(population, config, rng);
             int index2 = selectParent(population, config, rng);
@@ -119,7 +113,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
 
             mutate(child, config, rng);
 
-            // Oceniamy tylko, jesli osobnik sie zmienil (oszczedzamy wywolania oceny)
+            // Oceniamy tylko zmienione osobniki
             if (!child.evaluated) {
                 evaluator.evaluate(child);
             }

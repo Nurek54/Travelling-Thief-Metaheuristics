@@ -1,4 +1,3 @@
-// Wczytywanie pliku .ttp do struktury Problem.
 #pragma once
 
 #include <string>

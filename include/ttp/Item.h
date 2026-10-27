@@ -1,4 +1,3 @@
-// Pojedynczy przedmiot: id, zysk, waga, miasto.
 #pragma once
 
 struct Item{

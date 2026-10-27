@@ -8,14 +8,12 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
     int n = problem.numCities;
     int m = problem.numItems;
 
-    // 1. Na ktorej pozycji trasy jest kazde miasto?
     std::vector<int> positionInRoute(n);
     for (int pos = 0; pos < n; pos++) {
         int city = individual.route[pos];
         positionInRoute[city] = pos;
     }
 
-    // 2. Ile drogi zostalo od pozycji pos do konca trasy (razem z powrotem do startu)?
     std::vector<double> remainingDistance(n);
     int lastCity = individual.route[n - 1];
     int startCity = individual.route[0];
@@ -26,7 +24,6 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
         remainingDistance[pos] = remainingDistance[pos + 1] + distance.get(cityHere, cityNext);
     }
 
-    // 3. Ocena kazdego przedmiotu. Trzymam pary (ocena, numer przedmiotu).
     std::vector<std::pair<double, int>> scores;
     for (int k = 0; k < m; k++) {
         const Item& item = problem.items[k];
@@ -45,10 +42,8 @@ void packItems(const Problem& problem, const Distance& distance, Individual& ind
         scores.push_back(std::make_pair(score, k));
     }
 
-    // 4. Sortuj rosnaco po ocenie, wiec najlepsze na koncu.
     std::sort(scores.begin(), scores.end());
 
-    // 5. Bierz od najlepszego (od konca), jesli sie miesci.
     individual.picked.assign(m, 0);
     int currentWeight = 0;
     double vmax = problem.maxSpeed;
