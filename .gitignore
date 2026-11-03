@@ -6,3 +6,8 @@ __pycache__/
 .venv/
 results_stare_a280/
 docs/raport/sections/
+
+# stare wykresy nieuzywane w sprawku
+docs/badania/
+docs/strojenie/
+docs/wyniki/
