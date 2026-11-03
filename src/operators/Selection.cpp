@@ -18,7 +18,7 @@ int tournamentSelection(const std::vector<Individual>& population, int tourSize,
 int rouletteSelection(const std::vector<Individual>& population, Rng& rng) {
     int size = static_cast<int>(population.size());
 
-    // 1. Najgorsze G w populacji
+    // najgorsze G
     double worst = population[0].fitness;
     for (int i = 1; i < size; i++) {
         if (population[i].fitness < worst) {
@@ -26,7 +26,7 @@ int rouletteSelection(const std::vector<Individual>& population, Rng& rng) {
         }
     }
 
-    // 2. Waga osobnika = jego G - najgorsze G (zawsze >= 0)
+    // waga = G - najgorsze
     double total = 0.0;
     for (int i = 0; i < size; i++) {
         total += population[i].fitness - worst;
@@ -36,7 +36,7 @@ int rouletteSelection(const std::vector<Individual>& population, Rng& rng) {
         return rng.uniformInt(0, size - 1);
     }
 
-    // 3. Krecimy kolem: losujemy punkt na kole i szukamy, na czyje pole wypadl
+    // losujemy punkt na kole
     double point = rng.uniformReal() * total;
     double sum = 0.0;
     for (int i = 0; i < size; i++) {

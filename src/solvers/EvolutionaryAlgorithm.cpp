@@ -59,7 +59,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
     EAResult result;
     long long evaluationsAtStart = evaluator.getCount();
 
-    // 1. Inicjalizacja: czesc populacji zachlanna (greedyInit), reszta losowa
+    // startowa populacja czesc zachlanna reszta losowa
     int greedyCount = static_cast<int>(config.greedyInit * config.popSize);
 
     std::vector<Individual> population;
@@ -80,9 +80,8 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
     }
     result.history.push_back(computeGenerationStats(population, 0));
 
-    // 2. Kolejne pokolenia
     for (int generation = 1; generation <= config.generations; generation++) {
-        // Koniec po wyczerpaniu limitu ocen
+        // koniec jak skonczy sie limit ocen
         long long used = evaluator.getCount() - evaluationsAtStart;
         if (config.maxEvaluations > 0 && used >= config.maxEvaluations) {
             break;
@@ -90,7 +89,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
 
         std::vector<Individual> newPopulation;
 
-        // Elitaryzm: najlepsi przechodza bez zmian
+        // elitaryzm
         if (config.elitism > 0) {
             std::vector<Individual> sorted = population;
             std::sort(sorted.begin(), sorted.end(), isBetter);
@@ -99,7 +98,7 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
             }
         }
 
-        // Reszta populacji: selekcja, krzyzowanie, mutacja, ocena
+        // reszta selekcja krzyzowanie mutacja
         while (static_cast<int>(newPopulation.size()) < config.popSize) {
             int index1 = selectParent(population, config, rng);
             int index2 = selectParent(population, config, rng);
@@ -108,12 +107,12 @@ EAResult runEvolutionaryAlgorithm(const Problem& problem, const Distance& distan
             if (rng.uniformReal() < config.px) {
                 child = makeChild(population[index1], population[index2], config, rng);
             } else {
-                child = population[index1]; // bez krzyzowania: kopia rodzica (z jego ocena)
+                child = population[index1]; // kopia rodzica razem z ocena
             }
 
             mutate(child, config, rng);
 
-            // Oceniamy tylko zmienione osobniki
+            // oceniamy tylko jak sie zmienil
             if (!child.evaluated) {
                 evaluator.evaluate(child);
             }

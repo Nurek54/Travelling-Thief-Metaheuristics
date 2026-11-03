@@ -24,9 +24,8 @@ static void makeNeighbour(Individual& individual, MutationType move, Rng& rng) {
     individual.evaluated = false;
 }
 
-// Automatyczne T0: srednie pogorszenie po 100 losowych ruchach od startu.
-// Taki ruch ma byc na starcie przyjmowany z prawdopodobienstwem acceptance:
-// T = srednie_pogorszenie / (-ln(acceptance))
+// auto T0 ze sredniego pogorszenia po 100 losowych ruchach
+// T = pogorszenie / -ln(acceptance)
 static double estimateStartTemperature(const Individual& start, Evaluator& evaluator, MutationType move,
                                        double acceptance, Rng& rng) {
     double sumWorse = 0.0;
@@ -54,7 +53,7 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
                                const SAConfig& config, Rng& rng) {
     SAResult result;
 
-    // 1. Rozwiazanie startowe: losowe albo zachlanne (najblizszy sasiad z losowego miasta)
+    // start losowy albo zachlanny
     Individual current;
     if (config.greedyStart) {
         int startCity = rng.uniformInt(0, problem.numCities - 1);
@@ -64,7 +63,7 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
     }
     evaluator.evaluate(current);
 
-    // 2. Temperatura poczatkowa: podana albo automatyczna
+    // T0 podane albo auto
     double temperature = config.startTemperature;
     if (temperature <= 0.0) {
         temperature = estimateStartTemperature(current, evaluator, config.move, config.startAcceptance, rng);
@@ -73,19 +72,17 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
     result.best = current;
     result.history.push_back({0, result.best.fitness, current.fitness, temperature});
 
-    // 3. Glowna petla
     for (int iteration = 1; iteration <= config.iterations; iteration++) {
-        // Sasiad = kopia aktualnego rozwiazania z jednym ruchem
+        // sasiad = kopia + jeden ruch
         Individual neighbour = current;
         makeNeighbour(neighbour, config.move, rng);
         evaluator.evaluate(neighbour);
 
-        // Czy przechodzimy do sasiada?
         double delta = neighbour.fitness - current.fitness;
         if (delta >= 0) {
             current = neighbour;
         } else {
-            // gorszy: bierzemy z prawdopodobienstwem exp(delta / T)
+            // gorszy bierzemy z prawd exp(delta/T)
             double acceptProbability = std::exp(delta / temperature);
             if (rng.uniformReal() < acceptProbability) {
                 current = neighbour;
@@ -96,7 +93,7 @@ SAResult runSimulatedAnnealing(const Problem& problem, const Distance& distance,
             result.best = current;
         }
 
-        // Schladzanie
+        // chlodzenie
         temperature = temperature * config.coolingRate;
 
         if (iteration % config.logEvery == 0) {

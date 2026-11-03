@@ -110,7 +110,7 @@ int runFullComparison() {
         "extra/kroA100_n495_uncorr-similar-weights_05.ttp",
     };
 
-    unsigned int seed = 42;
+    unsigned int seed = 1000;
     int runs = 10;
     int budget = 10000;
 

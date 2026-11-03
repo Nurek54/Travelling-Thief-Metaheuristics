@@ -1,12 +1,11 @@
-"""Seria eksperymentow do strojenia i badania parametrow.
+"""eksperymenty do strojenia
 
-Uruchomienie:
-    python scripts/run_experiments.py                              # lista eksperymentow i instancji
-    python scripts/run_experiments.py ea_pm_swap                   # jeden eksperyment na instancji extra
-    python scripts/run_experiments.py ea_gen sa_iter               # kilka
-    python scripts/run_experiments.py all                          # wszystkie
-    python scripts/run_experiments.py ea_tour --on easy1 hard1     # na wybranych instancjach
-    python scripts/run_experiments.py ea_tour --on all             # na wszystkich 7 instancjach
+python scripts/run_experiments.py                           lista eksperymentow
+python scripts/run_experiments.py ea_pm_swap                jeden na extra
+python scripts/run_experiments.py ea_gen sa_iter            kilka
+python scripts/run_experiments.py all                       wszystkie
+python scripts/run_experiments.py ea_tour --on easy1 hard1  na wybranych instancjach
+python scripts/run_experiments.py ea_tour --on all          na wszystkich 7
 """
 
 import os
@@ -21,7 +20,6 @@ import plot_parameters
 ROOT = Path(__file__).resolve().parent.parent
 TUNING_DIR = ROOT / "results" / "tuning"
 
-# Krotkie nazwy instancji (do --on)
 INSTANCES = {
     "easy1": "easy/berlin52_n255_uncorr-similar-weights_05.ttp",
     "easy2": "easy/berlin52_n255_bounded-strongly-corr_05.ttp",
@@ -34,13 +32,11 @@ INSTANCES = {
 DEFAULT_INSTANCE = "extra"
 RUNS = 10
 
-# Konfiguracje po pierwszym etapie strojenia: baza dla ea_elite_tuned, ea_packing, sa_t0 i kombinacji.
-# Ostateczne konfiguracje (po ea_kombinacje i sa_kombinacje) sa w main.cpp.
+# baza po 1 etapie strojenia (koncowe konfiguracje sa w Experiments.cpp)
 EA_TUNED = {"gen": 1000, "max-evals": 10000, "greedy-init": 0.5, "mut": "swap", "pm": 0.002}
 SA_TUNED = {"iter": 9999, "move": "swap", "greedy-start": 1}
 
-# nazwa: (metoda, parametr, wartosci, stale parametry). Zmieniamy jeden parametr naraz,
-# reszta ma wartosci domyslne z Config.h. Wartosc moze byc slownikiem (ea_budget: pop i gen naraz).
+# nazwa: (metoda, parametr, wartosci, stale parametry)
 EXPERIMENTS = {
     "ea_gen":          ("ea", "gen", [50, 100, 200, 500, 1000], {}),
     "ea_pop":          ("ea", "pop", [20, 50, 100, 200, 500], {}),
@@ -52,7 +48,7 @@ EXPERIMENTS = {
     "ea_sel":          ("ea", "sel", ["tournament", "roulette"], {}),
     "ea_cross":        ("ea", "cross", ["ox", "pmx"], {}),
     "ea_greedy_init":  ("ea", "greedy-init", [0.0, 0.1, 0.5, 1.0], {}),
-    # staly budzet pop x gen = 10 000
+    # pop x gen = 10000
     "ea_budget":       ("ea", "pop x gen", [{"pop": 20, "gen": 500}, {"pop": 50, "gen": 200},
                                             {"pop": 100, "gen": 100}, {"pop": 200, "gen": 50},
                                             {"pop": 500, "gen": 20}], {}),
@@ -63,9 +59,9 @@ EXPERIMENTS = {
     "sa_cooling":      ("sa", "cooling", [0.99, 0.995, 0.999, 0.9995, 0.9999], {}),
     "sa_move":         ("sa", "move", ["swap", "inversion"], {}),
     "sa_greedy_start": ("sa", "greedy-start", [0, 1], {}),
-    # t0 = 0 oznacza automatyczna temperature
+    # t0 = 0 to auto
     "sa_t0":           ("sa", "t0", [0, 1, 10, 100, 1000], SA_TUNED),
-    # Drugi etap strojenia: kolejne zmiany dodawane do konfiguracji dostrojonej
+    # 2 etap strojenia
     "ea_kombinacje":   ("ea", "konfiguracja", [
         {"label": "bazowa"},
         {"label": "Pm=0.005", "pm": 0.005},
@@ -91,7 +87,6 @@ EXPERIMENTS = {
 
 
 def find_executable():
-    """Szuka programu; Release ma pierwszenstwo, bo jest duzo szybszy."""
     names = ["travelling_thief_metaheuristics.exe", "travelling_thief_metaheuristics"]
     folders = ["cmake-build-release", "cmake-build-debug"]
     for folder in folders:
@@ -106,7 +101,6 @@ def find_executable():
 
 
 def program_environment(exe):
-    """Dodaje do PATH folder kompilatora MinGW (z CMakeCache.txt), bez tego poza CLion brakuje DLL."""
     env = os.environ.copy()
     cache = exe.parent / "CMakeCache.txt"
     if cache.exists():
@@ -131,7 +125,6 @@ def run_program(exe, arguments):
 
 
 def greedy_reference(exe, instance):
-    """Najlepszy wynik zachlannego na instancji."""
     path = TUNING_DIR / "greedy_reference.csv"
     if path.exists():
         path.unlink()

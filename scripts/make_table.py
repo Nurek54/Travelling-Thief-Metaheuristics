@@ -1,11 +1,5 @@
-"""Tabela porownawcza metod (jak Tabela 1 w tresci zadania).
-
-Czyta results/wyniki.csv (zapisuje go program C++) i tworzy:
-  - results/tabela.md
-  - results/tabela.csv (do Excela)
-
-Uruchomienie (z glownego folderu projektu):
-    python scripts/make_table.py
+"""tabela porownawcza z results/wyniki.csv
+python scripts/make_table.py
 """
 
 from pathlib import Path
@@ -39,7 +33,7 @@ def main():
     instances = list(dict.fromkeys(results["instance"]))
     methods = [m for m in METHOD_NAMES if m in set(results["method"])]
 
-    # Osobna tabela dla kazdej metody, bo jedna szeroka bylaby nieczytelna
+    # osobna tabela dla kazdej metody
     lines = ["# Porównanie metod", ""]
     for method in methods:
         lines.append(f"## {METHOD_NAMES[method]}")
@@ -72,7 +66,7 @@ def main():
     print("\n".join(lines))
     print(f"\nZapisano {TABLE_MD.relative_to(ROOT)}")
 
-    # CSV w ukladzie Tabeli 1: wiersz = instancja, kolumny = metoda_statystyka
+    # csv jak tabela 1 z tresci
     wide = results.pivot(index="instance", columns="method", values=STATS)
     wide = wide.reindex(index=instances)
     columns = []

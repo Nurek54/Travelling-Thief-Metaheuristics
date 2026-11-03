@@ -6,13 +6,13 @@ std::vector<int> orderCrossover(const std::vector<int>& parent1, const std::vect
     std::vector<int> child(n, -1);
     std::vector<bool> used(n, false);
 
-    // 1. Kopiujemy fragment [a, b] z rodzica 1
+    // fragment z rodzica 1
     for (int i = a; i <= b; i++) {
         child[i] = parent1[i];
         used[parent1[i]] = true;
     }
 
-    // 2. Wypelniamy puste miejsca miastami z rodzica 2 (w jego kolejnosci)
+    // reszta z rodzica 2 po kolei
     int pos = 0;
     for (int k = 0; k < n; k++) {
         int city = parent2[k];
@@ -42,13 +42,13 @@ std::vector<int> pmxCrossover(const std::vector<int>& parent1, const std::vector
         positionInParent1[parent1[i]] = i;
     }
 
-    // 1. Kopiujemy fragment [a, b] z rodzica 1
+    // fragment z rodzica 1
     for (int i = a; i <= b; i++) {
         child[i] = parent1[i];
         inSegment[parent1[i]] = true;
     }
 
-    // 2. Reszta z rodzica 2, z poprawkami przez mapowanie
+    // reszta z rodzica 2
     for (int i = 0; i < n; i++) {
         if (i >= a && i <= b) {
             continue;
@@ -56,8 +56,7 @@ std::vector<int> pmxCrossover(const std::vector<int>& parent1, const std::vector
 
         int city = parent2[i];
 
-        // Dopoki miasto jest juz we fragmencie, idziemy po mapowaniu:
-        // bierzemy miasto, ktore w rodzicu 2 stoi na pozycji, gdzie w rodzicu 1 jest "city"
+        // jak miasto juz jest we fragmencie to idziemy po mapowaniu
         while (inSegment[city]) {
             int pos = positionInParent1[city];
             city = parent2[pos];

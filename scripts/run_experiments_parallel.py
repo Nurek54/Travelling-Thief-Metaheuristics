@@ -1,18 +1,10 @@
-"""Te same eksperymenty co run_experiments.py, ale liczone rownolegle na wielu rdzeniach CPU.
+"""to samo co run_experiments.py ale rownolegle
+czasy przy liczeniu rownoleglym sa niewiarygodne, czasy do sprawka z samego exe
 
-Kazda wartosc parametru (10 uruchomien) to osobne zadanie. Kilka zadan liczy sie naraz
-(osobne procesy programu C++), kazde zapisuje wynik do wlasnego pliku tymczasowego,
-a na koncu pliki sa sklejane w zwykle results/tuning/<eksperyment>__<instancja>.csv.
-Wyniki G sa identyczne jak w run_experiments.py (kazde uruchomienie ma swoj seed).
-
-UWAGA: czasy (time_ms) przy liczeniu rownoleglym sa mniej wiarygodne (procesor obciazony).
-Czasy do sprawozdania bierz z pelnego porownania (sam .exe bez argumentow), puszczonego osobno.
-
-Uruchomienie (z glownego folderu projektu):
-    python scripts/run_experiments_parallel.py --wszystko                  # caly zestaw badan do sprawozdania
-    python scripts/run_experiments_parallel.py all --on extra              # jak w run_experiments.py
-    python scripts/run_experiments_parallel.py ea_tour sa_t0 --on easy1 hard1
-    python scripts/run_experiments_parallel.py --wszystko --jobs 8         # ile procesow naraz
+python scripts/run_experiments_parallel.py --wszystko            wszystkie badania do sprawka
+python scripts/run_experiments_parallel.py all --on extra
+python scripts/run_experiments_parallel.py ea_tour sa_t0 --on easy1 hard1
+python scripts/run_experiments_parallel.py --wszystko --jobs 8   ile procesow naraz
 """
 
 import os
@@ -25,7 +17,7 @@ import plot_parameters
 from run_experiments import (EXPERIMENTS, INSTANCES, DEFAULT_INSTANCE, RUNS, TUNING_DIR,
                              find_executable, program_environment)
 
-# Pelny zestaw badan do sprawozdania: (eksperymenty, instancje)
+# wszystkie badania do sprawka
 FULL_PLAN = [
     (list(EXPERIMENTS.keys()), ["extra"]),
     (["ea_pm_swap", "ea_tour", "ea_px", "ea_budget", "ea_sel", "ea_greedy_init", "ea_elite_tuned"],
@@ -39,7 +31,6 @@ TMP_DIR = TUNING_DIR / "tmp"
 
 
 def make_tasks(name, instance):
-    """Jedno zadanie = jedna wartosc parametru (10 uruchomien)."""
     method, param, values, extra = EXPERIMENTS[name]
     tasks = []
     for index, value in enumerate(values):
@@ -72,7 +63,6 @@ def run_task(exe, env, task):
 
 
 def merge_results(name, instance, tasks):
-    """Skleja pliki tymczasowe w results/tuning/<name>__<instance>.csv w kolejnosci wartosci."""
     out = TUNING_DIR / f"{name}__{instance}.csv"
     lines = []
     for task in tasks:
@@ -85,7 +75,7 @@ def merge_results(name, instance, tasks):
 
 
 def parse_arguments(arguments):
-    jobs = max(1, (os.cpu_count() or 2) // 2)  # polowa watkow, czyli mniej wiecej liczba rdzeni
+    jobs = max(1, (os.cpu_count() or 2) // 2)  # polowa watkow
     if "--jobs" in arguments:
         position = arguments.index("--jobs")
         jobs = int(arguments[position + 1])
@@ -120,7 +110,7 @@ def parse_arguments(arguments):
             for name in names:
                 pairs.append((name, instance))
 
-    # greedy_packing na extra jest w planie dwa razy
+    # greedy_packing jest w planie 2 razy
     unique_pairs = []
     for pair in pairs:
         if pair not in unique_pairs:
@@ -139,7 +129,7 @@ def main():
     env = program_environment(exe)
     TMP_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Najdluzsze zadania (duze instancje) na poczatek, zeby na koncu nie czekac na jedno
+    # najdluzsze zadania najpierw
     tasks_by_pair = {pair: make_tasks(*pair) for pair in pairs}
     all_tasks = [task for tasks in tasks_by_pair.values() for task in tasks]
     order = {"hard1": 0, "hard2": 0, "medium1": 1, "medium2": 1, "extra": 2, "easy1": 3, "easy2": 3}

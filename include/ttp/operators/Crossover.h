@@ -5,16 +5,10 @@
 #include "ttp/Individual.h"
 #include "ttp/Rng.h"
 
-// OX (Order Crossover), wersja z podanymi punktami ciecia a <= b.
-// 1. Fragment [a, b] kopiujemy z rodzica 1 na te same pozycje.
-// 2. Pozostale pozycje (od lewej) wypelniamy miastami z rodzica 2 w jego kolejnosci,
-//    pomijajac te, ktore juz sa w dziecku.
+// OX fragment a..b z rodzica 1 reszta w kolejnosci z rodzica 2
 std::vector<int> orderCrossover(const std::vector<int>& parent1, const std::vector<int>& parent2, int a, int b);
 
-// PMX (Partially Mapped Crossover), wersja z podanymi punktami ciecia a <= b.
-// 1. Fragment [a, b] kopiujemy z rodzica 1.
-// 2. Pozostale pozycje bierzemy z rodzica 2. Jesli miasto juz jest we fragmencie,
-//    zamieniamy je wedlug mapowania rodzic1 <-> rodzic2 z tego fragmentu.
+// PMX fragment a..b z rodzica 1 reszta z rodzica 2 duplikaty przez mapowanie
 std::vector<int> pmxCrossover(const std::vector<int>& parent1, const std::vector<int>& parent2, int a, int b);
 
 Individual crossoverOX(const Individual& parent1, const Individual& parent2, Rng& rng);

@@ -1,14 +1,5 @@
-"""Wykresy przebiegu algorytmow.
-
-EA: najlepszy, sredni i najgorszy osobnik w kolejnych pokoleniach.
-    Czyta results/history/<instancja>_runXX.csv -> results/plots/ea_<instancja>.png
-SA: najlepsze i biezace rozwiazanie w kolejnych iteracjach.
-    Czyta results/history_sa/<instancja>_runXX.csv -> results/plots/sa_<instancja>.png
-
-Pliki CSV zapisuje program C++. Wykres to srednia ze wszystkich uruchomien.
-
-Uruchomienie (z glownego folderu projektu):
-    python scripts/plot_generations.py
+"""wykresy przebiegu ea i sa z results/history i results/history_sa
+python scripts/plot_generations.py
 """
 
 from pathlib import Path
@@ -34,7 +25,6 @@ COLOR_MUTED = "#52514e"
 COLOR_GRID = "#e4e3df"
 
 
-# Krotkie nazwy instancji jak w sprawozdaniu
 SHORT_NAMES = {
     "berlin52_n255_uncorr-similar-weights_05": "easy1",
     "berlin52_n255_bounded-strongly-corr_05": "easy2",
@@ -53,7 +43,6 @@ def short_name(name):
 
 
 def find_instances(folder):
-    """nazwa instancji -> lista plikow CSV z jej uruchomieniami"""
     instances = {}
     for path in sorted(folder.glob("*_run*.csv")):
         name = path.stem.rsplit("_run", 1)[0]
@@ -62,7 +51,6 @@ def find_instances(folder):
 
 
 def load_greedy_best():
-    """Najlepszy wynik zachlannego (linia odniesienia na wykresie)."""
     if not RESULTS_FILE.exists():
         return {}
     results = pd.read_csv(RESULTS_FILE, sep=";")
@@ -87,7 +75,7 @@ def style_axes(ax, title, xlabel):
         ax.spines[side].set_color(COLOR_GRID)
     ax.tick_params(colors=COLOR_MUTED)
 
-    # 1 320 000 zamiast "1.32" z dopiskiem "1e6" nad osia
+    # pelne liczby zamiast 1e6
     ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:,.0f}".replace(",", " ")))
     ax.legend(frameon=False, labelcolor=COLOR_TEXT)
 
@@ -103,8 +91,7 @@ def save_figure(fig, filename):
 
 def plot_instance(name, files, greedy_best):
     runs = [pd.read_csv(path, sep=";") for path in files]
-    # Przy limicie ocen uruchomienia maja rozna liczbe pokolen. Bierzemy tylko wspolne pokolenia,
-    # inaczej ostatnie punkty sa srednia z kilku uruchomien i "skacza".
+    # runy maja rozna liczbe pokolen wiec bierzemy tylko wspolne
     shortest = min(len(run) for run in runs)
     runs = [run.head(shortest) for run in runs]
     all_runs = pd.concat(runs)
@@ -131,7 +118,7 @@ def plot_sa_instance(name, files, greedy_best):
 
     fig, ax = plt.subplots(figsize=(8, 4.5), dpi=150)
 
-    # Najlepszy przerywana linia na wierzchu, bo czesto pokrywa sie z biezacym
+    # najlepszy przerywana na wierzchu bo pokrywa sie z biezacym
     ax.plot(mean.index, mean["current"], color=COLOR_AVG, linewidth=2.5, label="bieżący")
     ax.plot(mean.index, mean["best"], color=COLOR_BEST, linewidth=1.5, linestyle="--", label="najlepszy")
 

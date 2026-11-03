@@ -1,21 +1,5 @@
-"""Wykresy i tabele z badan parametrow.
-
-  results/tuning/plots/<eksperyment>__<instancja>.png   wykres dla jednej instancji (wartosci bezwzgledne)
-  results/tuning/plots/<eksperyment>__wszystkie.png     wszystkie instancje na jednym wykresie (znormalizowane)
-  results/tuning/plots/<eksperyment>__porownanie.png    eksperymenty z 2 wariantami: roznica B wzgledem A w %
-  results/tuning/plots/dwa_warianty__wszystkie.png      wszystkie eksperymenty z 2 wariantami na jednym wykresie
-  results/tuning/tabele.md                              tabele avg +/- std (podglad)
-  results/tuning/tabele.tex                             te same tabele w LaTeX (do sprawozdania)
-
-Zasady:
-  - eksperymenty z 2 wartosciami (np. turniej / ruletka) maja wykres slupkowy: o ile procent wariant B
-    jest lepszy (+) albo gorszy (-) od wariantu A w kazdej instancji, z odchyleniem standardowym,
-  - na wykresach nie ma linii algorytmu zachlannego (spłaszczalaby skale), jej wartosc jest w podtytule,
-  - wykres zbiorczy normalizuje kazda instancje do [0, 1] (0 = najgorsza wartosc parametru, 1 = najlepsza),
-    zeby bylo widac, czy optimum lezy w tym samym miejscu na roznych instancjach.
-
-Uruchomienie (z glownego folderu projektu):
-    python scripts/plot_parameters.py
+"""wykresy i tabele z badan parametrow z results/tuning
+python scripts/plot_parameters.py
 """
 
 import re
@@ -68,7 +52,7 @@ TITLES = {
     "sa_kombinacje": ("SA: drugi etap strojenia (start zachłanny)", "konfiguracja"),
 }
 
-# Kolor i znacznik instancji (znacznik pomaga, gdy kolory sa trudne do odroznienia)
+# kolor i znacznik dla instancji
 STYLE = {
     "easy1": ("#2a78d6", "o"),
     "easy2": ("#2a78d6", "o"),
@@ -95,9 +79,8 @@ COLOR_GRID = "#e4e3df"
 
 
 def load_experiments():
-    """eksperyment -> {instancja -> DataFrame}"""
     experiments = {}
-    old_style = {}  # pliki bez "__" ze starej wersji skryptu (zawsze extra)
+    old_style = {}  # stare pliki bez __ (extra)
 
     for path in sorted(TUNING_DIR.glob("*.csv")):
         if path.stem in IGNORED:
@@ -119,7 +102,6 @@ def load_experiments():
 
 
 def load_greedy_best():
-    """Najlepszy wynik zachlannego (do podtytulu wykresu), z results/wyniki.csv."""
     if not RESULTS_FILE.exists():
         return {}
     results = pd.read_csv(RESULTS_FILE, sep=";")
@@ -147,7 +129,6 @@ def is_numeric(labels):
 
 
 def is_ordered(name, labels):
-    """Czy wartosci parametru maja kolejnosc (wtedy laczymy punkty linia)."""
     return is_numeric(labels) or name == "ea_budget"
 
 
@@ -156,19 +137,17 @@ def thousands(value, _=None):
 
 
 def pretty_label(value):
-    """Etykieta wartosci parametru: 0.0010 -> 0.001, 100.0 -> 100, '20x500' -> '20×500'."""
     text = str(value)
     if is_numeric([text]):
         number = float(text)
         if number == int(number) and abs(number) >= 1:
             return str(int(number))
         return f"{number:g}"
-    # "x" zamieniamy tylko miedzy liczbami (20x500), zeby nie zepsuc "ox" albo "pmx"
+    # x tylko miedzy liczbami zeby nie zepsuc ox i pmx
     return re.sub(r"(?<=\d)x(?=\d)", "×", text)
 
 
 def set_tick_labels(ax, labels):
-    """Dlugie etykiety (np. nazwy konfiguracji) pochylone, zeby na siebie nie nachodzily."""
     if max(len(label) for label in labels) > 8:
         ax.set_xticklabels(labels, rotation=25, ha="right", fontsize=8)
     else:
@@ -223,7 +202,6 @@ def plot_single(name, instance, data, greedy_best):
 
 
 def plot_combined(name, per_instance):
-    """Wszystkie instancje razem, kazda znormalizowana do [0, 1]."""
     title, xlabel = TITLES.get(name, (name, "wartość"))
 
     first = next(iter(per_instance.values()))
@@ -268,11 +246,6 @@ def variant_name(name, label):
 
 
 def two_variant_difference(data, instance, greedy_best):
-    """Roznica B - A i jej odchylenie (z std obu wariantow) w % najlepszego wyniku zachlannego.
-
-    Dzielimy przez wynik zachlannego, a nie przez A, bo A bywa bliskie zera albo ujemne
-    (np. EA z parametrami startowymi) i wtedy procenty wychodza absurdalnie duze.
-    """
     a, b = data.iloc[0], data.iloc[1]
     base = abs(greedy_best.get(instance, a["avg"])) or 1.0
     diff = (b["avg"] - a["avg"]) / base * 100
@@ -281,7 +254,6 @@ def two_variant_difference(data, instance, greedy_best):
 
 
 def plot_two_variants(name, per_instance, greedy_best):
-    """Jeden eksperyment z 2 wariantami: slupek na instancje, o ile % B jest lepszy/gorszy od A."""
     title, _ = TITLES.get(name, (name, "wartość"))
     instances = sorted_instances(per_instance.keys())
     first = per_instance[instances[0]]
@@ -320,7 +292,6 @@ def plot_two_variants(name, per_instance, greedy_best):
 
 
 def plot_two_variants_combined(two_variant_experiments, greedy_best):
-    """Wszystkie eksperymenty z 2 wariantami na jednym wykresie: grupa slupkow na eksperyment."""
     names = [n for n in TITLES if n in two_variant_experiments]
     if len(names) < 2:
         return
@@ -333,7 +304,7 @@ def plot_two_variants_combined(two_variant_experiments, greedy_best):
             diff, error = two_variant_difference(two_variant_experiments[name][instance], instance, greedy_best)
             x = g + (k - (len(present) - 1) / 2) * width
             color, _ = STYLE.get(instance, (COLOR_SINGLE, "o"))
-            hatch = "//" if instance.endswith("2") else None  # easy2/medium2/hard2 kreskowane
+            hatch = "//" if instance.endswith("2") else None  # druga instancja z pary kreskowana
             ax.bar(x, diff, width=width, color=color, hatch=hatch, edgecolor="white",
                    label=instance if instance not in labelled else None,
                    yerr=error, capsize=2, error_kw={"ecolor": COLOR_MUTED, "elinewidth": 0.8})
