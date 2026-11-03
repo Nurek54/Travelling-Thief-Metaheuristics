@@ -17,12 +17,12 @@ C++ (algorytmy) + Python (wykresy, tabele).
 - [x] Implementacja selekcji i zarządzania populacją w algorytmie ewolucyjnym
 - [x] Implementacja narzędzi logowania → wykresy
 - [x] Implementacja innej metaheurystyki (SA lub TS)
-- [x] Wstępne strojenie metaheurystyk (wyniki: `docs/STROJENIE.md`)
-- [x] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego (wyniki: `docs/BADANIA.md`)
-- [ ] Przygotowanie sprawozdania: tabelki, wykresy, wnioski (dane gotowe: `docs/wyniki/`, `docs/BADANIA.md`; zostaje tekst)
+- [x] Wstępne strojenie metaheurystyk
+- [x] Badanie wpływu wartości parametrów na skuteczność/efektywność algorytmu genetycznego
+- [x] Przygotowanie sprawozdania: tabelki, wykresy, wnioski
 
 ## Uruchomienie
-1. Zbuduj i uruchom program C++ (najlepiej w profilu **Release**, ok. 4 min). Porównuje losowy, zachłanny, EA i SA (parametry z treści i dostrojone, budżet 10 000 ocen) na 7 instancjach. Zapisuje:
+1. Zbuduj i uruchom program C++ (najlepiej w profilu **Release**, ok. 1 min). Porównuje losowy, zachłanny, EA i SA (parametry z treści i dostrojone, budżet 10 000 ocen) na 7 instancjach. Zapisuje:
    - `results/wyniki.csv`: best/worst/avg/std dla każdej metody i instancji,
    - `results/history/<instancja>_runXX.csv`: przebieg EA (`generation;best;avg;worst`),
    - `results/history_sa/<instancja>_runXX.csv`: przebieg SA (`iteration;best;current;temperature`).
