@@ -1,0 +1,8 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+swap T0=10;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=10 cooling=0.999 move=swap start=greedy packing=simple;10;458434.99;454055.37;456180.12;1374.24;10000;510.85
+swap T0=100;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.999 move=swap start=greedy packing=simple;10;458128.42;451381.90;454920.04;2269.05;10000;505.36
+inw. T0=auto;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=auto(accept=0.5) cooling=0.999 move=inversion start=greedy packing=simple;10;445411.37;434150.86;439736.85;3460.39;10100;541.46
+inw. T0=10;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=10 cooling=0.999 move=inversion start=greedy packing=simple;10;456760.98;452471.09;454593.85;1323.15;10000;529.97
+inw. T0=100;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.999 move=inversion start=greedy packing=simple;10;456275.94;451007.05;453244.20;1473.47;10000;536.57
+inw. T0=1000;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=1000 cooling=0.999 move=inversion start=greedy packing=simple;10;449611.98;437724.84;443619.93;3949.41;10000;530.10
+inw. T0=100 a=0.995;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.995 move=inversion start=greedy packing=simple;10;457011.03;451774.29;454316.93;1793.87;10000;539.54

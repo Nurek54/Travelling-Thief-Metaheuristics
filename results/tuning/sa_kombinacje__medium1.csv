@@ -1,0 +1,8 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+swap T0=10;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=10 cooling=0.999 move=swap start=greedy packing=simple;10;168674.39;155301.92;163305.10;4035.66;10000;253.80
+swap T0=100;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.999 move=swap start=greedy packing=simple;10;168351.95;157216.39;163716.17;3796.83;10000;251.11
+inw. T0=auto;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=auto(accept=0.5) cooling=0.999 move=inversion start=greedy packing=simple;10;164139.23;134871.09;152259.71;9531.22;10100;263.52
+inw. T0=10;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=10 cooling=0.999 move=inversion start=greedy packing=simple;10;172560.74;164775.78;169312.60;2156.41;10000;260.19
+inw. T0=100;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.999 move=inversion start=greedy packing=simple;10;171476.13;162735.97;168676.56;3166.58;10000;267.26
+inw. T0=1000;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=1000 cooling=0.999 move=inversion start=greedy packing=simple;10;164139.23;148406.20;157769.52;4087.85;10000;257.73
+inw. T0=100 a=0.995;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.995 move=inversion start=greedy packing=simple;10;171476.13;164775.78;168963.44;2179.35;10000;262.27

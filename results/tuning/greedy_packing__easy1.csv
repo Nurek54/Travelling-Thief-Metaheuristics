@@ -1,0 +1,3 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+simple;greedy;easy/berlin52_n255_uncorr-similar-weights_05.ttp;nearest neighbour z kazdego miasta packing=simple;1;58571.98;46763.61;54141.28;2827.05;52;0.90
+smart;greedy;easy/berlin52_n255_uncorr-similar-weights_05.ttp;nearest neighbour z kazdego miasta packing=smart;1;53601.54;47342.57;50814.13;1337.62;52;0.95

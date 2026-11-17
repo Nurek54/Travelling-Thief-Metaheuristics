@@ -1,0 +1,6 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+0.99;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.99 move=inversion start=random packing=simple;10;421618.20;414363.76;417909.37;2239.62;10101;536.26
+0.995;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.995 move=inversion start=random packing=simple;10;423966.82;415915.74;419434.22;2206.71;10101;540.44
+0.999;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.999 move=inversion start=random packing=simple;10;422589.86;416148.48;418907.46;2174.66;10101;539.61
+0.9995;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.9995 move=inversion start=random packing=simple;10;419993.42;407035.93;414049.93;3985.63;10101;548.20
+0.9999;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.9999 move=inversion start=random packing=simple;10;395227.26;378607.23;387930.12;5120.88;10101;538.10

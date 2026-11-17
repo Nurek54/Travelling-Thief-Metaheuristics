@@ -1,0 +1,6 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+0.99;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.99 move=inversion start=random packing=simple;10;138111.39;124716.15;130285.55;4178.05;10101;258.38
+0.995;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.995 move=inversion start=random packing=simple;10;136806.53;126301.96;132359.31;3541.95;10101;262.40
+0.999;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.999 move=inversion start=random packing=simple;10;130578.91;117850.19;125379.23;3882.83;10101;259.70
+0.9995;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.9995 move=inversion start=random packing=simple;10;124072.95;103401.28;113129.06;7155.18;10101;260.15
+0.9999;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.9999 move=inversion start=random packing=simple;10;17768.83;-87730.74;-40178.63;34058.42;10101;260.91

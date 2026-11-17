@@ -1,0 +1,3 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+tournament;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;44432.54;24767.58;35213.14;6391.28;7333;89.26
+roulette;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=roulette elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;-5591.43;-17641.01;-12137.64;3899.67;7323;133.95

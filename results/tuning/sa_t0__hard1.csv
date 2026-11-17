@@ -1,0 +1,6 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+0;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=auto(accept=0.5) cooling=0.999 move=swap start=greedy packing=simple;10;447762.91;439295.29;441700.38;2304.66;10100;516.89
+1;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=1 cooling=0.999 move=swap start=greedy packing=simple;10;458505.62;453043.15;455808.11;1567.96;10000;525.81
+10;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=10 cooling=0.999 move=swap start=greedy packing=simple;10;458434.99;454055.37;456180.12;1374.24;10000;520.31
+100;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=100 cooling=0.999 move=swap start=greedy packing=simple;10;458128.42;451381.90;454920.04;2269.05;10000;523.92
+1000;sa;hard/a280_n1395_uncorr-similar-weights_05.ttp;iter=9999 T0=1000 cooling=0.999 move=swap start=greedy packing=simple;10;448372.56;442305.05;444497.69;2166.90;10000;514.96

@@ -1,0 +1,6 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+0;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=0 cross=OX mut=inversion greedyInit=0 packing=simple;10;49817.37;26242.14;37556.71;6045.83;7405;92.81
+1;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;44432.54;24767.58;35213.14;6391.28;7333;91.73
+2;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=2 cross=OX mut=inversion greedyInit=0 packing=simple;10;52202.61;34888.92;41091.11;5793.62;7259;93.06
+5;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=5 cross=OX mut=inversion greedyInit=0 packing=simple;10;48341.96;30232.51;37346.48;4533.02;7042;88.77
+10;ea;extra/kroA100_n495_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=10 cross=OX mut=inversion greedyInit=0 packing=simple;10;47157.63;28452.53;36397.54;5622.73;6677;84.50

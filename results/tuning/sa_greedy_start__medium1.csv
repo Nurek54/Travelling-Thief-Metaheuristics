@@ -1,0 +1,3 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+0;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.999 move=inversion start=random packing=simple;10;130578.91;117850.19;125379.23;3882.83;10101;258.95
+1;sa;medium/kroA150_n745_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.999 move=inversion start=greedy packing=simple;10;164139.23;134871.09;152259.71;9531.22;10101;257.36

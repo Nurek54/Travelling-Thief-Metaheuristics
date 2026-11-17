@@ -1,0 +1,3 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+swap;sa;easy/berlin52_n255_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.999 move=swap start=random packing=simple;10;64632.55;61209.35;63475.05;1011.10;10101;70.33
+inversion;sa;easy/berlin52_n255_uncorr-similar-weights_05.ttp;iter=10000 T0=auto(accept=0.5) cooling=0.999 move=inversion start=random packing=simple;10;66428.28;63147.39;65006.39;867.19;10101;74.18

@@ -1,0 +1,6 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+20x500;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=20 gen=500 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;61083.09;55071.64;57545.64;1583.05;6959;22.66
+50x200;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=50 gen=200 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;62921.57;52381.16;58895.42;2955.90;7210;28.02
+100x100;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;63069.48;58001.18;60246.68;1581.72;7332;35.11
+200x50;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=200 gen=50 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;62018.18;56453.90;59407.72;1669.87;7468;53.03
+500x20;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=500 gen=20 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;55274.56;51278.30;53743.13;1089.52;7791;68.50

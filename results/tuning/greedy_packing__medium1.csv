@@ -1,0 +1,3 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+simple;greedy;medium/kroA150_n745_uncorr-similar-weights_05.ttp;nearest neighbour z kazdego miasta packing=simple;1;167631.27;134871.09;152533.83;7896.34;150;8.92
+smart;greedy;medium/kroA150_n745_uncorr-similar-weights_05.ttp;nearest neighbour z kazdego miasta packing=smart;1;146311.10;131217.21;138719.59;2779.06;150;9.41

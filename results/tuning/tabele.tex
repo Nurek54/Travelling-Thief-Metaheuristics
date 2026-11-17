@@ -1,0 +1,372 @@
+% Tabele wygenerowane przez scripts/plot_parameters.py
+% Wymagane pakiety: booktabs. Wklej wybrane tabele do sprawozdania.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: liczba pokoleń (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-gen}
+  \begin{tabular}{lr}
+    \toprule
+    gen & extra \\
+    \midrule
+    50 & 5\,885 $\pm$ 8\,622 \\
+    100 & 35\,213 $\pm$ 6\,391 \\
+    200 & 59\,857 $\pm$ 5\,853 \\
+    500 & 82\,327 $\pm$ 4\,511 \\
+    1000 & \textbf{92\,685 $\pm$ 3\,461} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: rozmiar populacji (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-pop}
+  \begin{tabular}{lr}
+    \toprule
+    pop\_size & extra \\
+    \midrule
+    20 & $-$28\,539 $\pm$ 11\,327 \\
+    50 & 14\,138 $\pm$ 5\,874 \\
+    100 & 35\,213 $\pm$ 6\,391 \\
+    200 & 48\,731 $\pm$ 5\,266 \\
+    500 & \textbf{65\,533 $\pm$ 5\,306} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: prawdopodobieństwo mutacji (inwersja, na osobnika) (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-pm-inversion}
+  \begin{tabular}{lr}
+    \toprule
+    Pm & extra \\
+    \midrule
+    0 & $-$38\,804 $\pm$ 15\,108 \\
+    0{,}05 & 25\,967 $\pm$ 5\,608 \\
+    0{,}1 & 35\,213 $\pm$ 6\,391 \\
+    0{,}2 & 42\,136 $\pm$ 6\,580 \\
+    0{,}5 & \textbf{49\,220 $\pm$ 4\,310} \\
+    1 & 28\,829 $\pm$ 5\,569 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: prawdopodobieństwo mutacji (swap, na gen) (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-pm-swap}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Pm & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0 & 49\,468 $\pm$ 3\,040 & $-$72\,019 $\pm$ 15\,925 & 393\,734 $\pm$ 4\,976 & $-$27\,719 $\pm$ 14\,895 \\
+    0{,}001 & 57\,861 $\pm$ 1\,349 & 11\,406 $\pm$ 8\,020 & 413\,663 $\pm$ 1\,856 & 22\,779 $\pm$ 5\,720 \\
+    0{,}005 & 60\,538 $\pm$ 1\,109 & \textbf{21\,277 $\pm$ 8\,324} & \textbf{413\,748 $\pm$ 2\,178} & \textbf{29\,712 $\pm$ 9\,445} \\
+    0{,}01 & \textbf{61\,074 $\pm$ 1\,331} & 790 $\pm$ 6\,982 & 407\,549 $\pm$ 1\,809 & 27\,447 $\pm$ 6\,621 \\
+    0{,}05 & 53\,459 $\pm$ 1\,059 & $-$78\,327 $\pm$ 14\,646 & 391\,013 $\pm$ 2\,567 & $-$34\,272 $\pm$ 4\,348 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: prawdopodobieństwo krzyżowania (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-px}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Px & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0 & 52\,808 $\pm$ 1\,859 & $-$62\,347 $\pm$ 7\,899 & 384\,354 $\pm$ 1\,874 & $-$16\,098 $\pm$ 5\,011 \\
+    0{,}3 & 56\,687 $\pm$ 2\,382 & $-$10\,168 $\pm$ 10\,966 & 392\,581 $\pm$ 3\,590 & 19\,927 $\pm$ 5\,698 \\
+    0{,}5 & 58\,878 $\pm$ 2\,123 & 11\,404 $\pm$ 10\,280 & 396\,147 $\pm$ 3\,431 & 26\,707 $\pm$ 5\,536 \\
+    0{,}7 & \textbf{60\,247 $\pm$ 1\,582} & 24\,958 $\pm$ 8\,671 & 402\,035 $\pm$ 3\,468 & 35\,213 $\pm$ 6\,391 \\
+    0{,}9 & 59\,714 $\pm$ 1\,879 & 37\,687 $\pm$ 8\,030 & 405\,030 $\pm$ 2\,232 & 39\,484 $\pm$ 6\,518 \\
+    1 & 59\,953 $\pm$ 2\,148 & \textbf{38\,418 $\pm$ 8\,151} & \textbf{408\,301 $\pm$ 2\,463} & \textbf{42\,041 $\pm$ 8\,700} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: rozmiar turnieju (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-tour}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Tour & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    1 & 40\,585 $\pm$ 1\,484 & $-$140\,866 $\pm$ 11\,850 & 378\,023 $\pm$ 1\,229 & $-$80\,581 $\pm$ 6\,493 \\
+    2 & 58\,097 $\pm$ 1\,287 & $-$11\,636 $\pm$ 4\,109 & \textbf{404\,449 $\pm$ 1\,960} & 15\,214 $\pm$ 5\,551 \\
+    5 & \textbf{60\,247 $\pm$ 1\,582} & 24\,958 $\pm$ 8\,671 & 402\,035 $\pm$ 3\,468 & 35\,213 $\pm$ 6\,391 \\
+    10 & 60\,004 $\pm$ 1\,874 & 26\,039 $\pm$ 11\,771 & 399\,985 $\pm$ 2\,470 & 38\,856 $\pm$ 4\,995 \\
+    20 & 58\,981 $\pm$ 2\,389 & 24\,346 $\pm$ 9\,096 & 397\,295 $\pm$ 3\,309 & 40\,396 $\pm$ 8\,231 \\
+    50 & 59\,261 $\pm$ 925 & \textbf{38\,780 $\pm$ 6\,700} & 396\,843 $\pm$ 3\,073 & 41\,569 $\pm$ 6\,954 \\
+    100 & 58\,991 $\pm$ 1\,136 & 30\,603 $\pm$ 10\,283 & 396\,007 $\pm$ 2\,781 & \textbf{45\,438 $\pm$ 8\,013} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: elitaryzm (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-elite}
+  \begin{tabular}{lr}
+    \toprule
+    liczba elitarnych osobników & extra \\
+    \midrule
+    0 & 37\,557 $\pm$ 6\,046 \\
+    1 & 35\,213 $\pm$ 6\,391 \\
+    2 & \textbf{41\,091 $\pm$ 5\,794} \\
+    5 & 37\,346 $\pm$ 4\,533 \\
+    10 & 36\,398 $\pm$ 5\,623 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA dostrojony: elitaryzm (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-elite-tuned}
+  \begin{tabular}{lrrrr}
+    \toprule
+    liczba elitarnych osobników & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0 & \textbf{62\,994 $\pm$ 989} & 167\,860 $\pm$ 1\,396 & 456\,711 $\pm$ 1\,039 & 101\,776 $\pm$ 1\,309 \\
+    1 & 62\,519 $\pm$ 1\,272 & 168\,090 $\pm$ 1\,494 & 457\,212 $\pm$ 908 & 102\,186 $\pm$ 1\,360 \\
+    2 & 62\,783 $\pm$ 981 & 167\,856 $\pm$ 1\,088 & 457\,494 $\pm$ 901 & 102\,128 $\pm$ 1\,638 \\
+    5 & 62\,433 $\pm$ 1\,488 & \textbf{168\,093 $\pm$ 1\,870} & \textbf{457\,923 $\pm$ 698} & \textbf{102\,885 $\pm$ 1\,986} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: metoda selekcji (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-sel}
+  \begin{tabular}{lrrrr}
+    \toprule
+    selekcja & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    tournament & \textbf{60\,247 $\pm$ 1\,582} & \textbf{24\,958 $\pm$ 8\,671} & \textbf{402\,035 $\pm$ 3\,468} & \textbf{35\,213 $\pm$ 6\,391} \\
+    roulette & 54\,041 $\pm$ 1\,877 & $-$50\,538 $\pm$ 12\,535 & 394\,723 $\pm$ 2\,357 & $-$12\,138 $\pm$ 3\,900 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: operator krzyżowania (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-cross}
+  \begin{tabular}{lr}
+    \toprule
+    krzyżowanie & extra \\
+    \midrule
+    ox & \textbf{35\,213 $\pm$ 6\,391} \\
+    pmx & 23\,884 $\pm$ 6\,565 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: udział tras zachłannych w populacji startowej (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-greedy-init}
+  \begin{tabular}{lrrrr}
+    \toprule
+    greedyInit & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0 & 60\,247 $\pm$ 1\,582 & 24\,958 $\pm$ 8\,671 & 402\,035 $\pm$ 3\,468 & 35\,213 $\pm$ 6\,391 \\
+    0{,}1 & \textbf{63\,701 $\pm$ 889} & 168\,140 $\pm$ 2\,182 & 456\,104 $\pm$ 1\,066 & 102\,238 $\pm$ 1\,552 \\
+    0{,}5 & 63\,482 $\pm$ 1\,081 & 169\,543 $\pm$ 1\,657 & 455\,917 $\pm$ 1\,228 & 104\,021 $\pm$ 2\,305 \\
+    1 & 63\,326 $\pm$ 872 & \textbf{170\,330 $\pm$ 1\,337} & \textbf{456\,436 $\pm$ 816} & \textbf{104\,897 $\pm$ 1\,467} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: populacja × pokolenia przy stałym budżecie (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-budget}
+  \begin{tabular}{lrrrr}
+    \toprule
+    pop\_size $\times$ gen & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    20$\times$500 & 57\,546 $\pm$ 1\,583 & 29\,349 $\pm$ 11\,233 & 391\,161 $\pm$ 3\,553 & 33\,394 $\pm$ 6\,940 \\
+    50$\times$200 & 58\,895 $\pm$ 2\,956 & \textbf{34\,564 $\pm$ 14\,578} & 397\,878 $\pm$ 3\,788 & \textbf{41\,054 $\pm$ 3\,623} \\
+    100$\times$100 & \textbf{60\,247 $\pm$ 1\,582} & 24\,958 $\pm$ 8\,671 & 402\,035 $\pm$ 3\,468 & 35\,213 $\pm$ 6\,391 \\
+    200$\times$50 & 59\,408 $\pm$ 1\,670 & $-$130 $\pm$ 5\,982 & \textbf{404\,570 $\pm$ 2\,265} & 17\,173 $\pm$ 7\,714 \\
+    500$\times$20 & 53\,743 $\pm$ 1\,090 & $-$51\,435 $\pm$ 10\,585 & 395\,645 $\pm$ 1\,332 & $-$17\,093 $\pm$ 4\,676 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: pakowanie przedmiotów (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-packing}
+  \begin{tabular}{lr}
+    \toprule
+    pakowanie & extra \\
+    \midrule
+    simple & \textbf{102\,186 $\pm$ 1\,360} \\
+    smart & 87\,838 $\pm$ 2\,194 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Zachłanny: pakowanie przedmiotów (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:greedy-packing}
+  \begin{tabular}{lrrrrrrr}
+    \toprule
+    pakowanie & easy1 & easy2 & medium1 & medium2 & hard1 & hard2 & extra \\
+    \midrule
+    simple & \textbf{54\,141 $\pm$ 2\,827} & \textbf{116\,947 $\pm$ 3\,542} & \textbf{152\,534 $\pm$ 7\,896} & \textbf{326\,768 $\pm$ 12\,109} & \textbf{437\,465 $\pm$ 4\,607} & \textbf{739\,152 $\pm$ 3\,553} & \textbf{82\,681 $\pm$ 9\,039} \\
+    smart & 50\,814 $\pm$ 1\,338 & 110\,251 $\pm$ 2\,498 & 138\,720 $\pm$ 2\,779 & 307\,080 $\pm$ 7\,357 & 437\,465 $\pm$ 4\,607 & 739\,152 $\pm$ 3\,553 & 78\,064 $\pm$ 2\,305 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{SA: liczba iteracji (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:sa-iter}
+  \begin{tabular}{lrrrr}
+    \toprule
+    iteracje & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    1000 & 43\,731 $\pm$ 4\,108 & $-$81\,467 $\pm$ 23\,061 & 380\,586 $\pm$ 3\,481 & $-$61\,297 $\pm$ 18\,926 \\
+    5000 & 63\,117 $\pm$ 1\,270 & 90\,220 $\pm$ 8\,666 & 405\,774 $\pm$ 3\,834 & 66\,832 $\pm$ 5\,549 \\
+    10000 & 65\,006 $\pm$ 867 & 125\,379 $\pm$ 3\,883 & 418\,907 $\pm$ 2\,175 & 90\,751 $\pm$ 3\,828 \\
+    50000 & \textbf{65\,251 $\pm$ 1\,006} & 161\,437 $\pm$ 3\,336 & 440\,478 $\pm$ 2\,204 & 104\,603 $\pm$ 2\,792 \\
+    100000 & 65\,251 $\pm$ 1\,006 & \textbf{164\,274 $\pm$ 3\,460} & \textbf{446\,929 $\pm$ 2\,475} & \textbf{104\,738 $\pm$ 2\,826} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{SA: współczynnik chłodzenia (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:sa-cooling}
+  \begin{tabular}{lrrrr}
+    \toprule
+    $\alpha$ & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0{,}99 & 64\,049 $\pm$ 1\,914 & 130\,286 $\pm$ 4\,178 & 417\,909 $\pm$ 2\,240 & 91\,419 $\pm$ 2\,743 \\
+    0{,}995 & 64\,611 $\pm$ 1\,144 & \textbf{132\,359 $\pm$ 3\,542} & \textbf{419\,434 $\pm$ 2\,207} & \textbf{92\,619 $\pm$ 4\,094} \\
+    0{,}999 & \textbf{65\,006 $\pm$ 867} & 125\,379 $\pm$ 3\,883 & 418\,907 $\pm$ 2\,175 & 90\,751 $\pm$ 3\,828 \\
+    0{,}9995 & 64\,764 $\pm$ 963 & 113\,129 $\pm$ 7\,155 & 414\,050 $\pm$ 3\,986 & 82\,863 $\pm$ 4\,129 \\
+    0{,}9999 & 48\,966 $\pm$ 3\,169 & $-$40\,179 $\pm$ 34\,058 & 387\,930 $\pm$ 5\,121 & $-$37\,253 $\pm$ 18\,753 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{SA: ruch do sąsiada (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:sa-move}
+  \begin{tabular}{lrrrr}
+    \toprule
+    ruch & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    swap & 63\,475 $\pm$ 1\,011 & 103\,367 $\pm$ 8\,210 & \textbf{442\,544 $\pm$ 1\,406} & 73\,154 $\pm$ 5\,606 \\
+    inversion & \textbf{65\,006 $\pm$ 867} & \textbf{125\,379 $\pm$ 3\,883} & 418\,907 $\pm$ 2\,175 & \textbf{90\,751 $\pm$ 3\,828} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{SA: rozwiązanie startowe (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:sa-greedy-start}
+  \begin{tabular}{lrrrr}
+    \toprule
+    start (0 = losowy, 1 = zachłanny) & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0 & 65\,006 $\pm$ 867 & 125\,379 $\pm$ 3\,883 & 418\,907 $\pm$ 2\,175 & 90\,751 $\pm$ 3\,828 \\
+    1 & \textbf{65\,074 $\pm$ 857} & \textbf{152\,260 $\pm$ 9\,531} & \textbf{439\,737 $\pm$ 3\,460} & \textbf{91\,819 $\pm$ 3\,259} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{SA dostrojony: temperatura początkowa (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:sa-t0}
+  \begin{tabular}{lrrrr}
+    \toprule
+    T0 (0 = automatyczna) & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    0 & 63\,737 $\pm$ 1\,293 & 152\,260 $\pm$ 9\,531 & 441\,700 $\pm$ 2\,305 & 85\,673 $\pm$ 7\,315 \\
+    1 & 61\,867 $\pm$ 1\,654 & 163\,270 $\pm$ 4\,020 & 455\,808 $\pm$ 1\,568 & 101\,312 $\pm$ 2\,598 \\
+    10 & 61\,961 $\pm$ 1\,716 & 163\,305 $\pm$ 4\,036 & \textbf{456\,180 $\pm$ 1\,374} & \textbf{101\,337 $\pm$ 2\,635} \\
+    100 & 62\,173 $\pm$ 1\,581 & \textbf{163\,716 $\pm$ 3\,797} & 454\,920 $\pm$ 2\,269 & 100\,978 $\pm$ 2\,605 \\
+    1000 & \textbf{63\,775 $\pm$ 1\,215} & 159\,778 $\pm$ 4\,920 & 444\,498 $\pm$ 2\,167 & 100\,264 $\pm$ 2\,317 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{EA: drugi etap strojenia (zmiany dodawane po kolei) (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:ea-kombinacje}
+  \begin{tabular}{lrrrr}
+    \toprule
+    konfiguracja & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    bazowa & 62\,519 $\pm$ 1\,272 & 168\,090 $\pm$ 1\,494 & 457\,212 $\pm$ 908 & 102\,186 $\pm$ 1\,360 \\
+    Pm=0{,}005 & 62\,592 $\pm$ 917 & 167\,471 $\pm$ 1\,519 & 454\,589 $\pm$ 1\,205 & 104\,220 $\pm$ 1\,032 \\
+    +Px=1 & 62\,467 $\pm$ 1\,422 & 168\,213 $\pm$ 2\,226 & 453\,744 $\pm$ 1\,884 & 103\,417 $\pm$ 1\,293 \\
+    +greedy=1 & 63\,056 $\pm$ 1\,194 & 168\,333 $\pm$ 1\,063 & 454\,582 $\pm$ 1\,726 & 103\,520 $\pm$ 1\,082 \\
+    +elite=5 & 62\,780 $\pm$ 1\,049 & 167\,886 $\pm$ 1\,586 & 456\,158 $\pm$ 1\,401 & 103\,111 $\pm$ 1\,299 \\
+    +Tour=10 & 63\,148 $\pm$ 1\,148 & 168\,342 $\pm$ 762 & \textbf{457\,284 $\pm$ 837} & 104\,371 $\pm$ 1\,186 \\
+    +pop=50 & 62\,087 $\pm$ 1\,634 & 167\,481 $\pm$ 1\,095 & 456\,387 $\pm$ 895 & 102\,456 $\pm$ 1\,195 \\
+    +Tour=10, inw{,} Pm=0{,}2 & 63\,379 $\pm$ 523 & 170\,981 $\pm$ 1\,176 & 456\,521 $\pm$ 575 & 105\,032 $\pm$ 1\,620 \\
+    +Tour=10, inw{,} Pm=0{,}5 & \textbf{65\,083 $\pm$ 1\,207} & \textbf{171\,451 $\pm$ 1\,513} & 457\,173 $\pm$ 1\,261 & \textbf{105\,911 $\pm$ 846} \\
+    +Tour=10, inw{,} Pm=1 & 64\,636 $\pm$ 1\,092 & 169\,847 $\pm$ 1\,176 & 455\,848 $\pm$ 913 & 104\,942 $\pm$ 1\,233 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{SA: drugi etap strojenia (start zachłanny) (avg $\pm$ std z 10 uruchomień)}
+  \label{tab:sa-kombinacje}
+  \begin{tabular}{lrrrr}
+    \toprule
+    konfiguracja & easy1 & medium1 & hard1 & extra \\
+    \midrule
+    swap T0=10 & 61\,961 $\pm$ 1\,716 & 163\,305 $\pm$ 4\,036 & \textbf{456\,180 $\pm$ 1\,374} & 101\,337 $\pm$ 2\,635 \\
+    swap T0=100 & 62\,173 $\pm$ 1\,581 & 163\,716 $\pm$ 3\,797 & 454\,920 $\pm$ 2\,269 & 100\,978 $\pm$ 2\,605 \\
+    inw{,} T0=auto & 65\,074 $\pm$ 857 & 152\,260 $\pm$ 9\,531 & 439\,737 $\pm$ 3\,460 & 91\,819 $\pm$ 3\,259 \\
+    inw{,} T0=10 & \textbf{65\,219 $\pm$ 1\,580} & \textbf{169\,313 $\pm$ 2\,156} & 454\,594 $\pm$ 1\,323 & 106\,475 $\pm$ 1\,444 \\
+    inw{,} T0=100 & 64\,588 $\pm$ 2\,014 & 168\,677 $\pm$ 3\,167 & 453\,244 $\pm$ 1\,473 & 105\,641 $\pm$ 2\,005 \\
+    inw{,} T0=1000 & 64\,998 $\pm$ 1\,237 & 157\,770 $\pm$ 4\,088 & 443\,620 $\pm$ 3\,949 & 99\,952 $\pm$ 2\,743 \\
+    inw{,} T0=100 a=0{,}995 & 64\,561 $\pm$ 1\,362 & 168\,963 $\pm$ 2\,179 & 454\,317 $\pm$ 1\,794 & \textbf{106\,746 $\pm$ 930} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+

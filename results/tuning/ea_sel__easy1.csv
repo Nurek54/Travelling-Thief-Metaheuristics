@@ -1,0 +1,3 @@
+label;method;instance;config;runs;best;worst;avg;std;evaluations;time_ms
+tournament;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=tournament Tour=5 elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;63069.48;58001.18;60246.68;1581.72;7332;36.95
+roulette;ea;easy/berlin52_n255_uncorr-similar-weights_05.ttp;pop=100 gen=100 Px=0.7 Pm=0.1 sel=roulette elite=1 cross=OX mut=inversion greedyInit=0 packing=simple;10;57933.44;50418.62;54040.52;1876.65;7328;65.21
